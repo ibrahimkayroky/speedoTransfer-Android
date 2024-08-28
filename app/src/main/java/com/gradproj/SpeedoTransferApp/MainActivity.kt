@@ -21,31 +21,10 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Youssef")
-                    Greeting("Youssef")
-                    Greeting("Youssef")
-                    Greeting("Youssef")
 
+                ) {}
 
-                }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SpeedoTransferAppTheme {
-        Greeting("Android")
     }
 }
