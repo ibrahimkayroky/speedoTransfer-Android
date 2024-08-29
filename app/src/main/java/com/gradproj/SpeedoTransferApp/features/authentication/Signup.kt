@@ -1,9 +1,7 @@
 package com.gradproj.SpeedoTransferApp.features.authentication
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,12 +18,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.ui.components.customButton
-import com.gradproj.SpeedoTransferApp.ui.components.customTextField
-import com.gradproj.SpeedoTransferApp.ui.theme.P500
+import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
+import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 
 @Composable
-fun userAuthentication(modifier: Modifier = Modifier) {
+fun UserAuthentication(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth()
@@ -47,7 +44,7 @@ fun userAuthentication(modifier: Modifier = Modifier) {
                 .padding(bottom = 65.dp)
         )
 
-        customTextField(
+        CustomTextField(
             header = "Full Name",
             placeHolder = "Enter Your Full Name",
             icon = ImageVector.vectorResource(id = R.drawable.useric),
@@ -57,7 +54,7 @@ fun userAuthentication(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
         )
 
-        customTextField(
+        CustomTextField(
             header = "Email",
             placeHolder = "Enter Your Email",
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
@@ -67,7 +64,7 @@ fun userAuthentication(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
         )
 
-        customTextField(
+        CustomTextField(
             header = "Password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
@@ -77,7 +74,7 @@ fun userAuthentication(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
         )
 
-        customTextField(
+        CustomTextField(
             header = "Confirm password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
@@ -86,14 +83,16 @@ fun userAuthentication(modifier: Modifier = Modifier) {
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
         )
-        
-        customButton(
+
+        CustomButton(
             text = "Sign up",
             onClick = {},
+            buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .height(55.dp)
         )
+
         Row {
             Text(text = "Already have an account? ", color = Color(0xFF898886))
             Text(text = "Sign in", color = Color(0xFF871E35), textDecoration = TextDecoration.Underline)
