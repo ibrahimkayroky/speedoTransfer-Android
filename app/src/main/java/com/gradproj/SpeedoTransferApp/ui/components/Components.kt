@@ -56,7 +56,7 @@ fun GradientBackground(content: @Composable () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun CustomTextField(
     header: String, placeHolder: String, icon: ImageVector, inputType: KeyboardType, modifier: Modifier = Modifier
@@ -70,7 +70,7 @@ fun CustomTextField(
             text = header,
             fontWeight = FontWeight(400),
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = 16.dp)
         )
         OutlinedTextField(
             value = text,
@@ -125,7 +125,7 @@ fun CustomButton(text: String, onClick: () -> Unit, buttonType: String, modifier
 
 
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {onClick ()},
         colors =  if(enabled) buttonColor else ButtonDefaults.buttonColors(containerColor = G100),
         shape = RoundedCornerShape(6.dp),
         modifier = modifier
