@@ -41,7 +41,9 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.P100
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P75
+import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
 import com.gradproj.SpeedoTransferApp.ui.theme.white
+import com.gradproj.SpeedoTransferApp.ui.theme.yellowGradient
 
 @Composable
 fun GradientBackground(content: @Composable () -> Unit) {
@@ -49,7 +51,20 @@ fun GradientBackground(content: @Composable () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.linearGradient(0.0f to white, 1.0f to Color(0xFFFFE6F0))
+                Brush.linearGradient(0.0f to white, 1.0f to redGradient)
+            )
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun GradientBackground2(content: @Composable () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.linearGradient(0.0f to yellowGradient, 1.0f to redGradient)
             )
     ) {
         content()

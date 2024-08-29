@@ -25,7 +25,8 @@ import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 fun UserAuthentication(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
     ) {
 
         Text(
