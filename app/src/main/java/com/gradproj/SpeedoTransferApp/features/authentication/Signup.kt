@@ -69,7 +69,7 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             header = "Password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Text,
+            inputType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -79,7 +79,7 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             header = "Confirm password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Text,
+            inputType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
