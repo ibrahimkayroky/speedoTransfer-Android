@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
                     color = white
                 ) {
                     GradientBackground2{
-                    //UserAuthentication(modifier = Modifier.padding(16.dp))
-                    NoInternet(modifier = Modifier.padding(16.dp))
+                    UserAuthentication(modifier = Modifier.padding(16.dp))
+                    //NoInternet(modifier = Modifier.padding(16.dp))
                     }
                 }
             }
