@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Speedo Transfer App</string>
+    <string name="error404_message">It seems like we’re haveing some diffculities , please don’t leave your aspirations, we are sending for help</string>
+    <string name="server_error">Server error...</string>
+    <string name="call_us">Call Us</string>
+    <string name="message_us">Message Us</string>
 </resources>

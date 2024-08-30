@@ -11,7 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gradproj.SpeedoTransferApp.features.authentication.UserAuthentication
+import com.gradproj.SpeedoTransferApp.features.error.Error404
+import com.gradproj.SpeedoTransferApp.features.error.NoInternet
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
+import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
 import com.gradproj.SpeedoTransferApp.ui.theme.SpeedoTransferAppTheme
 import com.gradproj.SpeedoTransferApp.ui.theme.white
 
@@ -24,8 +27,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = white
                 ) {
-                    GradientBackground{
+                    GradientBackground2{
                     UserAuthentication(modifier = Modifier.padding(16.dp))
+                    //NoInternet(modifier = Modifier.padding(16.dp))
                     }
                 }
             }
@@ -33,9 +37,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun UserAuthenticationPreview()
 {
     UserAuthentication()
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun Error404Preview()
+{
+    NoInternet()
 }

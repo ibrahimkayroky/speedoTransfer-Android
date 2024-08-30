@@ -26,7 +26,8 @@ import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 fun UserAuthentication(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
     ) {
 
         Text(
@@ -69,7 +70,7 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             header = "Password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Text,
+            inputType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -79,7 +80,7 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             header = "Confirm password",
             placeHolder = "Enter Your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Text,
+            inputType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
