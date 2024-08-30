@@ -63,7 +63,7 @@ fun SignIn(modifier: Modifier = Modifier) {
             header = "Password",
             placeHolder = "Enter your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Text,
+            inputType = KeyboardType.Password,
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()

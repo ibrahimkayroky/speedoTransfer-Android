@@ -39,7 +39,7 @@ fun SignupContinue(modifier: Modifier = Modifier) {
         ) {
             Icon(painter = painterResource(id = R.drawable.drop_downic), contentDescription = "back",modifier = Modifier.align(Alignment.Start))
             Text(
-                text = "Speedo Transfer",
+                text = "Speedo Transfer ",
                 fontWeight = FontWeight(600),
                 fontSize = 24.sp,
                 color = G900,
