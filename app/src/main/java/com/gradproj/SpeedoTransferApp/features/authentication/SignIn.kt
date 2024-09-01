@@ -16,7 +16,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
@@ -24,7 +27,7 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 
 @Composable
-fun SignIn(modifier: Modifier = Modifier) {
+fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
     GradientBackground {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,7 +76,7 @@ fun SignIn(modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign in",
-            onClick = {},
+            onClick = {navController.navigate(Screen.Signup.route + "/youssef")},
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -81,8 +84,14 @@ fun SignIn(modifier: Modifier = Modifier) {
         )
 
         Row {
-            Text(text = "Don’t have an account? ", color = G100)
-            Text(text = "Sign Up", color = P300, textDecoration = TextDecoration.Underline)
+            Text(text = "Don’t have an account? ",
+                color = G100
+            )
+            Text(
+                text = "Sign Up",
+                color = P300,
+                textDecoration = TextDecoration.Underline,
+            )
         }
     }
 }
@@ -91,5 +100,5 @@ fun SignIn(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SignInpreview() {
-    SignIn()
+    SignIn(navController = rememberNavController())
 }

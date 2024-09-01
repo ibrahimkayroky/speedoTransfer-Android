@@ -18,12 +18,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 
 @Composable
-fun UserAuthentication(modifier: Modifier = Modifier) {
+fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -37,10 +39,16 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(bottom = 55.dp, top = 8.dp)
         )
-
+        Text(
+            text = "$name",
+            fontWeight = FontWeight(500),
+            fontSize = 20.sp,
+            modifier = Modifier
+                .padding(bottom = 55.dp, top = 8.dp)
+        )
         Text(
             text = "Speedo Transfer",
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight(600),
             fontSize = 24.sp,
             modifier = Modifier
                 .padding(bottom = 65.dp)
@@ -88,7 +96,7 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign up",
-            onClick = {},
+            onClick = {navController.navigate(Screen.SignUpContinue.route + "/name" + "/email" + "/password")},
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -97,7 +105,11 @@ fun UserAuthentication(modifier: Modifier = Modifier) {
 
         Row {
             Text(text = "Already have an account? ", color = Color(0xFF898886))
-            Text(text = "Sign in", color = Color(0xFF871E35), textDecoration = TextDecoration.Underline)
+            Text(
+                text = "Sign in",
+                color = Color(0xFF871E35),
+                textDecoration = TextDecoration.Underline
+            )
         }
     }
 }

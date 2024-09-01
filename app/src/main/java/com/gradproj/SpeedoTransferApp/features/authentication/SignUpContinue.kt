@@ -2,6 +2,7 @@ package com.gradproj.SpeedoTransferApp.features.authentication
 
 
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
@@ -31,7 +33,7 @@ import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField as CustomTex
 
 
 @Composable
-fun SignupContinue(modifier: Modifier = Modifier) {
+fun SignupContinue(navController: NavController,name: String?,email: String?,password: String?, modifier: Modifier = Modifier) {
     GradientBackground {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -46,6 +48,9 @@ fun SignupContinue(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(bottom = 64.dp, top = 64.dp)
             )
+            Text(text = "$name")
+            Text(text = "$email")
+            Text(text = "$password")
             Column( horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.fillMaxWidth()) {
                 Text(
@@ -106,5 +111,5 @@ fun SignupContinue(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun  SignupContinuePreview() {
-    SignupContinue()
+    //SignupContinue()
 }
