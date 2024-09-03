@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.gradproj.SpeedoTransferApp.features.mainApp.HomeScreen
+
 import com.gradproj.SpeedoTransferApp.features.navigation.Navigation
 import com.gradproj.SpeedoTransferApp.ui.theme.SpeedoTransferAppTheme
 
@@ -17,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpeedoTransferAppTheme {
                 Surface() {
-                        Navigation(modifier = Modifier.padding(16.dp))
+                    HomeScreen(modifier = Modifier.padding(16.dp))
                 }
             }
         }

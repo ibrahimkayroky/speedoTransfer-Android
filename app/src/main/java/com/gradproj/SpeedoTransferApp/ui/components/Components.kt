@@ -2,8 +2,10 @@ package com.gradproj.SpeedoTransferApp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -23,10 +26,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
+import com.gradproj.SpeedoTransferApp.ui.theme.G200
 import com.gradproj.SpeedoTransferApp.ui.theme.G70
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
@@ -156,4 +162,73 @@ fun CustomButton(text: String, onClick: () -> Unit, buttonType: String, modifier
         )
     }
 }
+@Composable
+fun BottonBar( Type:String) {
+    Surface(  color = Color.White,
+        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp), // Adjust curve here
+        shadowElevation = 8.dp,
+        modifier = Modifier
+            .fillMaxWidth()){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                if(Type=="home"){
+                    Icon(painter = painterResource(id = R.drawable.homeic), contentDescription = "home",tint = P300)
+                    Text(text = "Home",color = P300)
+                }else{
+                    Icon(painter = painterResource(id = R.drawable.homeic), contentDescription = "home",tint = G200)
+                    Text(text = "Home",color = G200)
+                }
+
+            }
+            Column (verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                if(Type=="transfer"){
+                    Icon(painter = painterResource(id = R.drawable.transfer_1ic), contentDescription = "home",tint = P300)
+                    Text(text = "Transfer",color = P300)
+                }else{
+                    Icon(painter = painterResource(id = R.drawable.transfer_1ic), contentDescription = "Transfer",tint = G200)
+                    Text(text = "Transfer",color = G200)
+                }
+            }
+            Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally)  {
+                if(Type=="transaction"){
+                    Icon(painter = painterResource(id = R.drawable.history_1ic), contentDescription = "Transaction",tint = P300)
+                    Text(text = "Transaction",color = P300)
+                }else{
+                    Icon(painter = painterResource(id = R.drawable.history_1ic), contentDescription = "Transaction", tint = G200)
+                    Text(text = "Transaction",color = G200)
+                }
+            }
+            Column (verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                if(Type=="card"){
+                    Icon(painter = painterResource(id = R.drawable.cards_1ic), contentDescription = "My Card",tint = P300)
+                    Text(text = "My Card",color = P300)
+                }else{
+                    Icon(painter = painterResource(id = R.drawable.cards_1ic), contentDescription = "My Card", tint = G200)
+                    Text(text = "My Card",color = G200)
+                }
+            }
+            Column (verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                if(Type=="more"){
+                    Icon(painter = painterResource(id = R.drawable.moreic), contentDescription = "more",tint = P300)
+                    Text(text = "More",color = P300)
+                }else{
+                    Icon(painter = painterResource(id = R.drawable.moreic), contentDescription = "more", tint = G200)
+                    Text(text = "More",color = G200)
+                }
+            }
+        }
+    }
+}
+
 
