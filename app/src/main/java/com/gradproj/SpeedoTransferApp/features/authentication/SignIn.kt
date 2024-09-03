@@ -1,5 +1,3 @@
-package com.gradproj.SpeedoTransferApp.features.authentication
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,33 +17,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
+import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
+import com.gradproj.SpeedoTransferApp.ui.theme.G100
+import com.gradproj.SpeedoTransferApp.ui.theme.P300
 
 @Composable
-fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modifier) {
+fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
+    GradientBackground {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
 
         Text(
-            text = "Sign Up",
+            text = "Sign In",
             fontWeight = FontWeight(500),
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(bottom = 55.dp, top = 8.dp)
+                .padding(bottom = 64.dp, top = 16.dp)
         )
-        Text(
-            text = "$name",
-            fontWeight = FontWeight(500),
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(bottom = 55.dp, top = 8.dp)
-        )
+
         Text(
             text = "Speedo Transfer",
             fontWeight = FontWeight(600),
@@ -54,19 +50,11 @@ fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modi
                 .padding(bottom = 65.dp)
         )
 
-        CustomTextField(
-            header = "Full Name",
-            placeHolder = "Enter Your Full Name",
-            icon = ImageVector.vectorResource(id = R.drawable.useric),
-            inputType = KeyboardType.Text,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth()
-        )
+
 
         CustomTextField(
             header = "Email",
-            placeHolder = "Enter Your Email",
+            placeHolder = "Enter your email address",
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
             inputType = KeyboardType.Text,
             modifier = Modifier
@@ -76,17 +64,7 @@ fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modi
 
         CustomTextField(
             header = "Password",
-            placeHolder = "Enter Your password",
-            icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Password,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth()
-        )
-
-        CustomTextField(
-            header = "Confirm password",
-            placeHolder = "Enter Your password",
+            placeHolder = "Enter your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
             inputType = KeyboardType.Password,
             modifier = Modifier
@@ -94,9 +72,11 @@ fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modi
                 .fillMaxWidth()
         )
 
+
+
         CustomButton(
-            text = "Sign up",
-            onClick = {navController.navigate(Screen.SignUpContinue.route + "/name" + "/email" + "/password")},
+            text = "Sign in",
+            onClick = {navController.navigate(Screen.Signup.route + "/youssef")},
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -104,12 +84,21 @@ fun SignUp(navController: NavController,name: String?, modifier: Modifier = Modi
         )
 
         Row {
-            Text(text = "Already have an account? ", color = Color(0xFF898886))
+            Text(text = "Don’t have an account? ",
+                color = G100
+            )
             Text(
-                text = "Sign in",
-                color = Color(0xFF871E35),
-                textDecoration = TextDecoration.Underline
+                text = "Sign Up",
+                color = P300,
+                textDecoration = TextDecoration.Underline,
             )
         }
     }
+}
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun SignInpreview() {
+    SignIn(navController = rememberNavController())
 }

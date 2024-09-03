@@ -1,6 +1,7 @@
 package com.gradproj.SpeedoTransferApp.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +11,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,11 +34,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.G70
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
+import com.gradproj.SpeedoTransferApp.ui.theme.P100
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P75
+import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
 import com.gradproj.SpeedoTransferApp.ui.theme.white
+import com.gradproj.SpeedoTransferApp.ui.theme.yellowGradient
 
 @Composable
 fun GradientBackground(content: @Composable () -> Unit) {
@@ -46,7 +50,20 @@ fun GradientBackground(content: @Composable () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.linearGradient(0.0f to white, 1.0f to Color(0xFFFFE6F0))
+                Brush.linearGradient(0.0f to white, 1.0f to redGradient)
+            )
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun GradientBackground2(content: @Composable () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.linearGradient(0.0f to yellowGradient, 1.0f to redGradient)
             )
     ) {
         content()
@@ -55,7 +72,7 @@ fun GradientBackground(content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun customTextField(
+fun CustomTextField(
     header: String, placeHolder: String, icon: ImageVector, inputType: KeyboardType, modifier: Modifier = Modifier
 ){
 
@@ -111,15 +128,33 @@ fun customTextField(
 }
 
 @Composable
-fun customButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier){
+fun CustomButton(text: String, onClick: () -> Unit, buttonType: String, modifier: Modifier = Modifier){
+
+    var enabled by remember { mutableStateOf(true) }
+
+    val buttonColor = if(buttonType == "Filled")
+        ButtonDefaults.buttonColors(containerColor = P300)
+    else
+        ButtonDefaults.buttonColors(containerColor = Color.White)
+
+
     Button(
         onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(containerColor = P300),
+        colors =  if(enabled) buttonColor else ButtonDefaults.buttonColors(containerColor = G100),
         shape = RoundedCornerShape(6.dp),
         modifier = modifier
             .fillMaxWidth()
+            .border(
+                width = 1.5.dp,
+                color = if(buttonType == "Outlined" && enabled) Color(P300.value) else Color.Transparent,
+                shape = RoundedCornerShape(6.dp)
+                )
     ) {
-        Text(text = text, fontSize = 16.sp)
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            color = if(buttonType == "Outlined" && enabled) P300 else Color.White
+        )
     }
 }
 

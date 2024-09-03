@@ -4,6 +4,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 
 val white = Color(0xFFFFFFFF)
+val redGradient = Color(0xFFFFE6F0)
+val yellowGradient = Color(0xFFFEF7E6)
+
 val P50 = Color(0xFFF3E9EB)
 val P75 = Color(0xFFCEA3AC)
 val P100 = Color(0xFFB97D8A)
