@@ -2,7 +2,7 @@ package com.gradproj.SpeedoTransferApp.features.authentication
 
 
 
-import android.os.Bundle
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,21 +35,27 @@ import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField as CustomTex
 
 
 @Composable
-fun SignupContinue(navController: NavController,name: String?,email: String?,password: String?, modifier: Modifier = Modifier) {
+fun SignupContinue(navController: NavController, name: String?, email: String?,password: String?, modifier: Modifier = Modifier) {
+
+    val countryState = remember { mutableStateOf("") }
+    val dateState = remember { mutableStateOf("") }
+
     GradientBackground {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier.fillMaxWidth()
         ) {
             Icon(painter = painterResource(id = R.drawable.drop_downic), contentDescription = "back",modifier = Modifier.align(Alignment.Start))
-            Text(
-                text = "Speedo Transfer ",
-                fontWeight = FontWeight(600),
-                fontSize = 24.sp,
-                color = G900,
-                modifier = Modifier
-                    .padding(bottom = 64.dp, top = 64.dp)
-            )
+            if (name != null) {
+                Text(
+                    text = name,
+                    fontWeight = FontWeight(600),
+                    fontSize = 24.sp,
+                    color = G900,
+                    modifier = Modifier
+                        .padding(bottom = 64.dp, top = 64.dp)
+                )
+            }
             Text(text = "$name")
             Text(text = "$email")
             Text(text = "$password")
@@ -77,6 +85,7 @@ fun SignupContinue(navController: NavController,name: String?,email: String?,pas
                 placeHolder = "Select your country",
                 icon = ImageVector.vectorResource(id = R.drawable.drop_downic),
                 inputType = KeyboardType.Text,
+                textState = countryState,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
@@ -86,6 +95,7 @@ fun SignupContinue(navController: NavController,name: String?,email: String?,pas
                 placeHolder = "DD/MM/YYY",
                 icon = ImageVector.vectorResource(id = R.drawable.dateic),
                 inputType = KeyboardType.Text,
+                textState = dateState,
                 modifier = Modifier
                     .padding(bottom = 32.dp)
                     .fillMaxWidth()
@@ -100,8 +110,18 @@ fun SignupContinue(navController: NavController,name: String?,email: String?,pas
             )
 
             Row {
-                Text(text = "Already have an account? ", color = G100)
-                Text(text = "Sign in", color = P300, textDecoration = TextDecoration.Underline)
+                Text(
+                    text = "Already have an account? ",
+                    color = G100
+                )
+                Text(text = "Sign in",
+                    color = P300,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate("Signin")
+                        }
+                )
             }
 
         }

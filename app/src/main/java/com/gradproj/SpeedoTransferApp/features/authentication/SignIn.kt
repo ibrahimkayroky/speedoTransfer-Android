@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -5,6 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
@@ -28,6 +31,10 @@ import com.gradproj.SpeedoTransferApp.ui.theme.P300
 
 @Composable
 fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
+
+    val emailState = remember { mutableStateOf("") }
+    val passwordState = remember { mutableStateOf("") }
+
     GradientBackground {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,6 +64,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
             placeHolder = "Enter your email address",
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
             inputType = KeyboardType.Text,
+            textState = emailState,
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -67,6 +75,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
             placeHolder = "Enter your password",
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
             inputType = KeyboardType.Password,
+            textState = passwordState,
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
@@ -76,7 +85,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign in",
-            onClick = {navController.navigate(Screen.Signup.route + "/youssef")},
+            onClick = {},
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -91,6 +100,10 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
                 text = "Sign Up",
                 color = P300,
                 textDecoration = TextDecoration.Underline,
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate(Screen.Signup.route)
+                    }
             )
         }
     }
