@@ -72,10 +72,11 @@ fun GradientBackground2(content: @Composable () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
-    header: String, placeHolder: String, icon: ImageVector, inputType: KeyboardType, textState: MutableState<String>, modifier: Modifier = Modifier
+    header: String, placeHolder: String, icon: ImageVector, inputType: KeyboardType,
+    textState: MutableState<String>,errorState: MutableState<Boolean> = remember { mutableStateOf(false) }
+    , errorMessage: String = "Invalid input", onValueChange: (String) -> Unit = { newValue -> textState.value = newValue }, modifier: Modifier = Modifier
 ){
 
-    var text by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
@@ -88,8 +89,14 @@ fun CustomTextField(
         OutlinedTextField(
             value = textState.value,
             placeholder = { Text(text = placeHolder) },
-            onValueChange = {textState.value = it},
+            onValueChange = { newValue -> onValueChange(newValue) },
             keyboardOptions = KeyboardOptions(keyboardType = inputType),
+            supportingText = {
+                if (errorState.value) {
+                    Text(errorMessage)
+                }
+            },
+            isError = errorState.value,
             visualTransformation = if (!passwordVisible && inputType == KeyboardType.Password) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
                 if(inputType == KeyboardType.Password){

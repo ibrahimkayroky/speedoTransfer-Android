@@ -46,19 +46,6 @@ fun SignupContinue(navController: NavController, name: String?, email: String?,p
             modifier = modifier.fillMaxWidth()
         ) {
             Icon(painter = painterResource(id = R.drawable.drop_downic), contentDescription = "back",modifier = Modifier.align(Alignment.Start))
-            if (name != null) {
-                Text(
-                    text = name,
-                    fontWeight = FontWeight(600),
-                    fontSize = 24.sp,
-                    color = G900,
-                    modifier = Modifier
-                        .padding(bottom = 64.dp, top = 64.dp)
-                )
-            }
-            Text(text = "$name")
-            Text(text = "$email")
-            Text(text = "$password")
             Column( horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.fillMaxWidth()) {
                 Text(

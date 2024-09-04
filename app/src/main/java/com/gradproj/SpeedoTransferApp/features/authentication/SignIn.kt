@@ -40,7 +40,6 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth()
     ) {
-
         Text(
             text = "Sign In",
             fontWeight = FontWeight(500),
@@ -56,8 +55,6 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(bottom = 65.dp)
         )
-
-
 
         CustomTextField(
             header = "Email",
@@ -80,8 +77,6 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
         )
-
-
 
         CustomButton(
             text = "Sign in",

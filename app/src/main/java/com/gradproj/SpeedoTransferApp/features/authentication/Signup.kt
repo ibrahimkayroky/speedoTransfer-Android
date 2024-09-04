@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.features.authentication
 
+import android.util.Patterns
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,11 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
     val passwordState = remember { mutableStateOf("") }
     val confirmPasswordState = remember { mutableStateOf("") }
 
+    val isErrorInName = remember { mutableStateOf(false) }
+    val isErrorInEmail = remember { mutableStateOf(false) }
+    val isErrorInPassword = remember { mutableStateOf(false) }
+    val isErrorInConfirmPassword = remember { mutableStateOf(false) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -61,6 +67,12 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.useric),
             inputType = KeyboardType.Text,
             textState = nameState,
+            errorState = isErrorInName,
+            errorMessage = "Enter a valid name",
+            onValueChange = {
+                nameState.value = it
+                isErrorInName.value = !isInputNotEmpty(it)
+            },
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -72,6 +84,12 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
             inputType = KeyboardType.Text,
             textState = emailState,
+            errorState = isErrorInEmail,
+            errorMessage = "Enter a valid email",
+            onValueChange = {
+                emailState.value = it
+                isErrorInEmail.value = !isEmailValid(it)
+            },
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -83,6 +101,12 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
             inputType = KeyboardType.Password,
             textState = passwordState,
+            errorState = isErrorInPassword,
+            errorMessage = "Password is weak",
+            onValueChange = {
+                passwordState.value = it
+                isErrorInPassword.value = !isPasswordStrong(it)
+            },
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
@@ -94,6 +118,12 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
             inputType = KeyboardType.Password,
             textState = confirmPasswordState,
+            errorState = isErrorInConfirmPassword,
+            errorMessage = "Passwords do not match",
+            onValueChange = {
+                confirmPasswordState.value = it
+                isErrorInConfirmPassword.value = it != passwordState.value
+            },
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
@@ -101,7 +131,12 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign up",
-            onClick = { navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}") },
+
+            onClick = {
+                if(validateInput(nameState.value, emailState.value, passwordState.value, confirmPasswordState.value)) {
+                    navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}")
+                }
+            },
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
@@ -121,4 +156,49 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
+    if (!isInputNotEmpty(name)) {
+        return false
+    }
+    if (!isEmailValid(email)) {
+        return false
+    }
+    if (!isPasswordStrong(password)) {
+        return false
+    }
+    if (password != confirmPassword) {
+        return false
+    }
+
+    return true
+}
+
+fun isInputNotEmpty(input: String): Boolean {
+    return input.isNotEmpty()
+}
+
+fun isEmailValid(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
+
+fun isPasswordStrong(password: String): Boolean {
+    if (password.length < 8) return false
+
+    var hasUppercase = false
+    var hasLowercase = false
+    var hasDigit = false
+    var hasSpecialChar = false
+
+    for (char in password) {
+        when {
+            char.isUpperCase() -> hasUppercase = true
+            char.isLowerCase() -> hasLowercase = true
+            char.isDigit() -> hasDigit = true
+            !char.isLetterOrDigit() -> hasSpecialChar = true
+        }
+    }
+
+    return hasUppercase && hasLowercase && hasDigit && hasSpecialChar
 }
