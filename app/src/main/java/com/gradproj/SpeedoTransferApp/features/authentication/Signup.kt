@@ -40,7 +40,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
     val isErrorInEmail = remember { mutableStateOf(false) }
     val isErrorInPassword = remember { mutableStateOf(false) }
     val isErrorInConfirmPassword = remember { mutableStateOf(false) }
-    GradientBackground{
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -132,7 +132,6 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign up",
-
             onClick = {
                 if(validateInput(nameState.value, emailState.value, passwordState.value, confirmPasswordState.value)) {
                     navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}")
@@ -157,7 +156,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             )
         }
     }
-}}
+}
 
 fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
     if (!isInputNotEmpty(name)) {

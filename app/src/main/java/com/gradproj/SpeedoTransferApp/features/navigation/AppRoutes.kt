@@ -10,8 +10,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.gradproj.SpeedoTransferApp.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.features.authentication.SignupContinue
+import com.gradproj.SpeedoTransferApp.features.profile.ChangePassword
+import com.gradproj.SpeedoTransferApp.features.profile.EditProfile
 import com.gradproj.SpeedoTransferApp.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.features.profile.Profile
+import com.gradproj.SpeedoTransferApp.features.profile.Settings
+
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
@@ -52,6 +56,21 @@ fun Navigation(modifier: Modifier = Modifier) {
             composable(
                 route = Screen.PersonalInformation.route){
                 PersonalInformation(navController)
+            }
+
+            composable(
+                route = Screen.Settings.route){
+                Settings(navController)
+            }
+
+            composable(
+                route = Screen.ChangePassword.route){
+                ChangePassword(navController)
+            }
+
+            composable(
+                route = Screen.EditProfile.route){
+                EditProfile(navController)
             }
         }
     }

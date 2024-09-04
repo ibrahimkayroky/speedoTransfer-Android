@@ -228,6 +228,8 @@ fun ProfileComponent(
                     tint = P300,
                     modifier = Modifier
                         .padding(12.dp)
+                        .width(24.dp)
+                        .height(24.dp)
                 )
             }
             Column(
