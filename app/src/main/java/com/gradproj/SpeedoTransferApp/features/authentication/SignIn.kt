@@ -34,76 +34,76 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
-
-    GradientBackground {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = "Sign In",
-            fontWeight = FontWeight(500),
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(bottom = 64.dp, top = 16.dp)
-        )
-
-        Text(
-            text = "Speedo Transfer",
-            fontWeight = FontWeight(600),
-            fontSize = 24.sp,
-            modifier = Modifier
-                .padding(bottom = 65.dp)
-        )
-
-        CustomTextField(
-            header = "Email",
-            placeHolder = "Enter your email address",
-            icon = ImageVector.vectorResource(id = R.drawable.emailic),
-            inputType = KeyboardType.Text,
-            textState = emailState,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth()
-        )
-
-        CustomTextField(
-            header = "Password",
-            placeHolder = "Enter your password",
-            icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Password,
-            textState = passwordState,
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
-
-        CustomButton(
-            text = "Sign in",
-            onClick = {},
-            buttonType = "Filled",
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .height(55.dp)
-        )
-
-        Row {
-            Text(text = "Don’t have an account? ",
-                color = G100
-            )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.fillMaxWidth()
+        ) {
             Text(
-                text = "Sign Up",
-                color = P300,
-                textDecoration = TextDecoration.Underline,
+                text = "Sign In",
+                fontWeight = FontWeight(500),
+                fontSize = 20.sp,
                 modifier = Modifier
-                    .clickable {
-                        navController.navigate(Screen.Signup.route)
-                    }
+                    .padding(bottom = 64.dp, top = 16.dp)
             )
+
+            Text(
+                text = "Speedo Transfer",
+                fontWeight = FontWeight(600),
+                fontSize = 24.sp,
+                modifier = Modifier
+                    .padding(bottom = 65.dp)
+            )
+
+            CustomTextField(
+                header = "Email",
+                placeHolder = "Enter your email address",
+                icon = ImageVector.vectorResource(id = R.drawable.emailic),
+                inputType = KeyboardType.Text,
+                textState = emailState,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomTextField(
+                header = "Password",
+                placeHolder = "Enter your password",
+                icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
+                inputType = KeyboardType.Password,
+                textState = passwordState,
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomButton(
+                text = "Sign in",
+                onClick = {},
+                buttonType = "Filled",
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .height(55.dp)
+            )
+
+            Row {
+                Text(
+                    text = "Don’t have an account? ",
+                    color = G100
+                )
+                Text(
+                    text = "Sign Up",
+                    color = P300,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Screen.Signup.route)
+                        }
+                )
+            }
         }
-    }
+
 }
-}
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable

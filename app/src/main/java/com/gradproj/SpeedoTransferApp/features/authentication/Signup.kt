@@ -26,6 +26,7 @@ import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
+import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 
 @Composable
 fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
@@ -39,7 +40,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
     val isErrorInEmail = remember { mutableStateOf(false) }
     val isErrorInPassword = remember { mutableStateOf(false) }
     val isErrorInConfirmPassword = remember { mutableStateOf(false) }
-
+    GradientBackground{
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -156,7 +157,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
             )
         }
     }
-}
+}}
 
 fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
     if (!isInputNotEmpty(name)) {
