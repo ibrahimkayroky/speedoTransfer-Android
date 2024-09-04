@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.ProfileComponent
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
@@ -87,23 +88,31 @@ fun Profile(navController: NavController, modifier: Modifier = Modifier) {
         }
 
         ProfileComponent(
+            navController,
+            pageToGo = Screen.PersonalInformation.route,
             header = "Personal Information",
             description = "Your Information",
             icon = ImageVector.vectorResource(id = R.drawable.useric),
         )
         ProfileComponent(
+            navController,
+            pageToGo = "",
             header = "Setting",
             description = "Change your settings",
             icon = ImageVector.vectorResource(id = R.drawable.settingic),
             modifier = Modifier.padding(top = 16.dp)
         )
         ProfileComponent(
+            navController,
+            pageToGo = "",
             header = "Payment history",
             description = "view your transactions",
             icon = ImageVector.vectorResource(id = R.drawable.history_1ic),
             modifier = Modifier.padding(top = 16.dp)
         )
         ProfileComponent(
+            navController,
+            pageToGo = "",
             header = "My Favourite list",
             description = "view your favourites",
             icon = ImageVector.vectorResource(id = R.drawable.favoriteic),

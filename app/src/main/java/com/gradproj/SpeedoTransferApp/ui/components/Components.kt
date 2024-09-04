@@ -2,6 +2,7 @@ package com.gradproj.SpeedoTransferApp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.ui.theme.G10
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
@@ -195,12 +197,19 @@ fun CustomButton(
 
 @Composable
 fun ProfileComponent(
+    navController: NavController,
+    pageToGo: String,
     header: String,
     description: String,
     icon: ImageVector,
     modifier: Modifier = Modifier
 ){
-    Column() {
+    Column(
+        modifier = Modifier
+            .clickable {
+                navController.navigate(pageToGo)
+            }
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
@@ -256,11 +265,37 @@ fun ProfileComponent(
     }
 }
 
+@Composable
+fun ProfileInformationComponent(
+    header: String,
+    description: String
+){
+    Column(
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = header,
+            fontWeight = FontWeight.W500,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .padding(top = 16.dp,bottom = 16.dp)
+        )
+        Text(
+            text = description,
+            fontWeight = FontWeight.W400,
+            fontSize = 16.sp,
+            color = G100,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+        )
+        HorizontalDivider(thickness = 1.dp, color = G100)
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
-    val navController = rememberNavController()
-    Profile(navController = navController)
+    ProfileInformationComponent(header = "Full Name", description = "Youssef Safwat Youssef Fahim")
 }
 
 
