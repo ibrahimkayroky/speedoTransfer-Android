@@ -294,10 +294,56 @@ fun ProfileInformationComponent(
     }
 }
 
+@Composable
+fun MoreMenuItem(
+    itemDescription: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier
+) {
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .padding(vertical = 16.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = G200,
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .width(24.dp)
+                    .height(24.dp)
+            )
+
+            Text(
+                text = itemDescription,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500,
+                color = G200
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .weight(1f)
+            )
+            if(itemDescription != "Logout")
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.chevron_rightic),
+                    contentDescription = null,
+                    tint = G200,
+                    modifier = Modifier
+                )
+        }
+        if(itemDescription != "Logout")
+            HorizontalDivider(thickness = 1.dp, color = G100)
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
-    ProfileInformationComponent(header = "Full Name", description = "Youssef Safwat Youssef Fahim")
+    MoreMenuItem(itemDescription = "Transfer from website", icon = ImageVector.vectorResource(id = R.drawable.cardic))
 }
 
 

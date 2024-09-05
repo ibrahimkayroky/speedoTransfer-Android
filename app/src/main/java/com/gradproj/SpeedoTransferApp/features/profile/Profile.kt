@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.features.profile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,6 +45,10 @@ fun Profile(navController: NavController, modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.drop_downic),
                 contentDescription = "back",
+                modifier = Modifier
+                    .clickable {
+                        navController.popBackStack()
+                    }
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -73,7 +78,8 @@ fun Profile(navController: NavController, modifier: Modifier = Modifier) {
                     fontWeight = FontWeight.W600,
                     fontSize = 20.sp,
                     color = G100,
-                    modifier = Modifier.padding(10.dp))
+                    modifier = Modifier.padding(10.dp)
+                )
             }
 
             Text(
