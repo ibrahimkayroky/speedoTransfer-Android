@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
                     Box(
                         modifier = Modifier
                             .background(Brush.linearGradient(0.0f to white, 1.0f to redGradient))
-                            .padding(16.dp)
                     ) {
                         Navigation(modifier = Modifier)
                     }

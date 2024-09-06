@@ -130,8 +130,8 @@ fun CustomTextField(
     errorState: MutableState<Boolean> = remember { mutableStateOf(false) },
     errorMessage: String = "Invalid input",
     onValueChange: (String) -> Unit = { newValue -> textState.value = newValue },
-
-extratype: ExtraType=ExtraType.none,  modifier: Modifier = Modifier
+    extratype: ExtraType=ExtraType.none,
+    modifier: Modifier = Modifier
 ){
     val isoCountryCodes: Array<String> = Locale.getISOCountries()
 
@@ -360,8 +360,14 @@ fun BottomBar(navController: NavController, Type:String) {
                     Text(text = "My Card",color = G200)
                 }
             }
-            Column (verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+            Column (
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate(Screen.MoreMenu.route)
+                    }
+            ) {
                 if(Type=="more"){
                     Icon(painter = painterResource(id = R.drawable.moreic), contentDescription = "more",tint = P300)
                     Text(text = "More",color = P300)

@@ -15,5 +15,4 @@ sealed class Screen(val route: String) {
     object TransferPayment : Screen("TransferPayment")
     object TransferConfirmation : Screen("TransferConfirmation")
 
-
 }

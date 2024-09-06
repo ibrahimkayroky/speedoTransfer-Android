@@ -73,7 +73,8 @@ fun SignupContinue(navController: NavController, name: String?, email: String?,p
                 placeHolder = "Select your country",
                 icon = ImageVector.vectorResource(id = R.drawable.drop_downic),
                 inputType = KeyboardType.Text,
-                textState = countryState, ExtraType.country,
+                textState = countryState,
+                extratype = ExtraType.country,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
@@ -83,7 +84,8 @@ fun SignupContinue(navController: NavController, name: String?, email: String?,p
                 placeHolder = "DD/MM/YYY",
                 icon = ImageVector.vectorResource(id = R.drawable.dateic),
                 inputType = KeyboardType.Text,
-                textState = dateState,ExtraType.date,
+                textState = dateState,
+                extratype = ExtraType.date,
                 modifier = Modifier
                     .padding(bottom = 32.dp)
                     .fillMaxWidth()
