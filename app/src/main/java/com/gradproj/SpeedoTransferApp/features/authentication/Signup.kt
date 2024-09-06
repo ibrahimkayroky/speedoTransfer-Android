@@ -101,7 +101,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign up",
-            onClick = { navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}") },
+            onClick = { navController.navigate(Screen.SignUpContinue.route + "/${nameState}" + "/${emailState}" + "/${passwordState}") },
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)
