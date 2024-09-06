@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,12 +14,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -38,7 +42,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
@@ -59,7 +65,9 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G200
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G70
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
+import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.theme.P50
 import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
 import com.gradproj.SpeedoTransferApp.ui.theme.white
 import com.gradproj.SpeedoTransferApp.ui.theme.yellowGradient
@@ -340,10 +348,82 @@ fun MoreMenuItem(
     }
 }
 
+@Composable
+fun FavouritesComponent(
+    name: String,
+    accountNO: String,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(P50),
+        modifier = modifier
+            .width(344.dp)
+            .height(88.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bank_card),
+                contentDescription = "bank card icon",
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(48.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(end = 55.dp)
+            ){
+                Text(
+                    text = name,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 16.sp,
+                    color = G900,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                )
+                Text(
+                    text = accountNO,
+                    fontWeight = FontWeight.W400,
+                    fontSize = 16.sp,
+                    color = G100
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.editic),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(G100),
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .clickable {
+                            onEditClick()
+                        }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.deleteic),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(Color(0xFFD80027)),
+                modifier = Modifier
+                    .clickable {
+                        onDeleteClick()
+                    }
+            )
+
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
-    MoreMenuItem(itemDescription = "Transfer from website", icon = ImageVector.vectorResource(id = R.drawable.cardic))
+    FavouritesComponent(name = "Asmaa Desouky", accountNO = "Account xxxx7890", onEditClick = {}, onDeleteClick = {})
 }
 
 

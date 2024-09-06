@@ -55,7 +55,7 @@ fun MoreMenu(navController: NavController, modifier: Modifier = Modifier) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
-   // if(showBottomSheet)
+    if(showBottomSheet)
         ModalBottomSheet(
             onDismissRequest = { showBottomSheet = false },
             sheetState = sheetState,
