@@ -3,7 +3,6 @@ package com.gradproj.SpeedoTransferApp.features.mainApp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,12 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -27,17 +23,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.ui.components.BottonBar
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
-import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G70
@@ -46,11 +43,11 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 
 @Composable
-fun TransferAmount(modifier: Modifier = Modifier) {
+fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) {
     GradientBackground2 {
         Scaffold(topBar = {
-            AmountTopBar()
-        }, bottomBar = { BottonBar("transfer") }) { innerPadding ->
+            AmountTopBar(navController)
+        }, bottomBar = { BottomBar(navController,"transfer") }) { innerPadding ->
             var amount = 1000
             Column(
                 verticalArrangement = Arrangement.Top,
@@ -164,7 +161,7 @@ fun TransferAmount(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .padding(vertical = 8.dp).background(G0)
                 )
-                CustomButton("Continue", {}, "Filled")
+                CustomButton("Continue", { navController.navigate(Screen.TransferConfirmation.route) }, "Filled",)
 
             }
         }
@@ -174,11 +171,11 @@ fun TransferAmount(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun TransferAmountPreview() {
-    TransferAmount()
+    TransferAmount(rememberNavController())
 }
 
 @Composable
-fun AmountTopBar(modifier: Modifier = Modifier) {
+fun AmountTopBar(navController: NavController,modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -197,7 +194,7 @@ fun AmountTopBar(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.drop_downic),
                 contentDescription = "back",
-                modifier = modifier.align(Alignment.CenterVertically)
+                modifier = modifier.align(Alignment.CenterVertically).clickable { navController.popBackStack() }
             )
 
             Text(

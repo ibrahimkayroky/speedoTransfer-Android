@@ -85,7 +85,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
         CustomButton(
             text = "Sign in",
-            onClick = {},
+            onClick = {navController.navigate(Screen.Home.route)},
             buttonType = "Filled",
             modifier = Modifier
                 .padding(bottom = 16.dp)

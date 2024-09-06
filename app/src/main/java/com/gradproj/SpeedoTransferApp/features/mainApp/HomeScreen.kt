@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,8 +32,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.ui.components.BottonBar
+import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G200
@@ -44,10 +45,10 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     GradientBackground2 {
         Scaffold(
-            bottomBar = { BottonBar("home") },
+            bottomBar = { BottomBar(navController,"home") },
             topBar={
                 HomeTopBar()
             }
@@ -91,7 +92,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     //TransactionListItem("karen Samuel",12345678,500,"today","11:00","recieved")
-    HomeScreen()
+    HomeScreen(rememberNavController())
 }
 
 @Composable

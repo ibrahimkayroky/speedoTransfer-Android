@@ -2,6 +2,7 @@ package com.gradproj.SpeedoTransferApp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +40,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.G200
 import com.gradproj.SpeedoTransferApp.ui.theme.G70
@@ -138,9 +142,9 @@ fun CustomButton(text: String, onClick: () -> Unit, buttonType: String, modifier
     var enabled by remember { mutableStateOf(true) }
 
     val buttonColor = if(buttonType == "Filled")
-        ButtonDefaults.buttonColors(containerColor = P300)
+        ButtonDefaults.buttonColors(containerColor = P300, contentColor = G0)
     else
-        ButtonDefaults.buttonColors(containerColor = Color.White)
+        ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = P300)
 
 
     Button(
@@ -163,7 +167,7 @@ fun CustomButton(text: String, onClick: () -> Unit, buttonType: String, modifier
     }
 }
 @Composable
-fun BottonBar( Type:String) {
+fun BottomBar(navController: NavController, Type:String) {
     Surface(  color = Color.White,
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp), // Adjust curve here
         shadowElevation = 8.dp,
@@ -177,7 +181,9 @@ fun BottonBar( Type:String) {
                 .fillMaxWidth()
         ) {
             Column(verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.clickable {
+                    navController.navigate(Screen.Home.route) }) {
                 if(Type=="home"){
                     Icon(painter = painterResource(id = R.drawable.homeic), contentDescription = "home",tint = P300)
                     Text(text = "Home",color = P300)
@@ -188,7 +194,8 @@ fun BottonBar( Type:String) {
 
             }
             Column (verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.clickable {
+                    navController.navigate(Screen.TransferAmount.route) }) {
                 if(Type=="transfer"){
                     Icon(painter = painterResource(id = R.drawable.transfer_1ic), contentDescription = "home",tint = P300)
                     Text(text = "Transfer",color = P300)

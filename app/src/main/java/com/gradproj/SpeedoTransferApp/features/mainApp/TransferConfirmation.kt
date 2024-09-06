@@ -1,12 +1,12 @@
 package com.gradproj.SpeedoTransferApp.features.mainApp
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -31,22 +30,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.ui.components.BottonBar
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P50
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
-fun TransferConfirmation(modifier: Modifier = Modifier) {
+fun TransferConfirmation(navController: NavController, modifier: Modifier = Modifier) {
     Scaffold(topBar = {
-        TransferTopBar()
+        TransferTopBar(navController)
 
-    }, bottomBar = { BottonBar("transfer") }){
+    }, bottomBar = { BottomBar(navController,"transfer") }){
         innerPadding ->
         var senderName :String = "Asmaa Dosuky"
         var senderAccNumber :Int = 6789
@@ -123,9 +124,9 @@ fun TransferConfirmation(modifier: Modifier = Modifier) {
                 )
             }
 
-            CustomButton("Confirm", {}, "Filled")
+            CustomButton("Confirm", {navController.navigate(Screen.TransferPayment.route)}, "Filled")
             Spacer(modifier = Modifier.height(16.dp))
-            CustomButton("Previous ", {}, "Outlined")
+            CustomButton("Previous ", {navController.popBackStack() }, "Outlined")
 
          }
     }
@@ -134,10 +135,10 @@ fun TransferConfirmation(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun TransferConfirmationPreview() {
-    TransferConfirmation()
+    TransferConfirmation(rememberNavController())
 }
 @Composable
-fun TransferTopBar(modifier: Modifier = Modifier) {
+fun TransferTopBar(navController: NavController,modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -156,7 +157,7 @@ fun TransferTopBar(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.drop_downic),
                 contentDescription = "back",
-                modifier = modifier.align(Alignment.CenterVertically)
+                modifier = modifier.align(Alignment.CenterVertically).clickable { navController.popBackStack() }
             )
 
             Text(

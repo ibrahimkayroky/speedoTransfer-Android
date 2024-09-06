@@ -1,23 +1,18 @@
 package com.gradproj.SpeedoTransferApp.features.mainApp
 
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -26,28 +21,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.ui.components.BottonBar
+import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
-import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
-import com.gradproj.SpeedoTransferApp.ui.theme.P50
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
-fun TransferPayment(modifier: Modifier = Modifier) {
+fun TransferPayment(navController: NavController, modifier: Modifier = Modifier) {
     Scaffold(topBar = {
-        TransferPaymentTopBar()
+        TransferPaymentTopBar(navController)
 
-    }, bottomBar = { BottonBar("transfer") }){
+    }, bottomBar = { BottomBar(navController,"transfer") }){
             innerPadding ->
         var senderName :String = "Asmaa Dosuky"
         var senderAccNumber :Int = 6789
@@ -60,28 +56,25 @@ fun TransferPayment(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(end=16.dp,start=16.dp)
+                .padding(16.dp)
                 .fillMaxSize()) {
 
 
-
-
-
-          Icon(painter = painterResource(id = R.drawable.ic_right_red), contentDescription ="done", tint = Color.Unspecified )
+          Image(painter = painterResource(id = R.drawable.ic_right_red), contentDescription ="done", contentScale = ContentScale.Crop, )
             Text(
                 text = "Your transfer was successful",
-                fontSize = 20.sp,
+                fontSize = 16.sp,
                 color = G900
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+
 
 
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(end=16.dp,start = 16.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -99,7 +92,7 @@ fun TransferPayment(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -121,11 +114,13 @@ fun TransferPayment(modifier: Modifier = Modifier) {
                 thickness = 1.dp,
                 color = Color.LightGray
             )
+
+
+
+           CustomButton("Back to Home", {navController.navigate(Screen.Home.route)}, "Filled")
             Spacer(modifier = Modifier.height(16.dp))
 
-            CustomButton("Back to Home", {}, "Filled")
-            Spacer(modifier = Modifier.height(16.dp))
-            CustomButton("Add to Favourite  ", {}, "Outlined")
+            CustomButton("Add to Favourite", {}, "Outlined")
 
         }
 
@@ -135,10 +130,10 @@ fun TransferPayment(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun TransferConfirmationPreview() {
-    TransferPayment()
+    TransferPayment(rememberNavController())
 }
 @Composable
-fun TransferPaymentTopBar(modifier: Modifier = Modifier) {
+fun TransferPaymentTopBar(navController: NavController,modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -149,7 +144,7 @@ fun TransferPaymentTopBar(modifier: Modifier = Modifier) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp),
+                .padding(bottom = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween.also { Alignment.CenterHorizontally }
         ) {
@@ -157,7 +152,7 @@ fun TransferPaymentTopBar(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.drop_downic),
                 contentDescription = "back",
-                modifier = modifier.align(Alignment.CenterVertically)
+                modifier = modifier.align(Alignment.CenterVertically).clickable { navController.popBackStack() }
             )
 
             Text(
@@ -170,7 +165,7 @@ fun TransferPaymentTopBar(modifier: Modifier = Modifier) {
                     .weight(1f)
                     .align(Alignment.CenterVertically)
                     .padding(end = 32.dp)
-            )
+                             )
         }
 
         Row(
@@ -228,7 +223,7 @@ fun TransferPaymentTopBar(modifier: Modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp, ),
+                .padding(bottom = 8.dp,),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

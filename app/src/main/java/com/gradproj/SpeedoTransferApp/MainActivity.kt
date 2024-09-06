@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpeedoTransferAppTheme {
                 Surface() {
-                    TransferConfirmation(modifier = Modifier.padding(16.dp))
+                    Navigation(modifier = Modifier.padding(16.dp))
                 }
             }
         }
