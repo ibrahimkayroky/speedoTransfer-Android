@@ -49,7 +49,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Scaffold(
             bottomBar = { BottonBar("home") },
             topBar={
-                TopBar()
+                HomeTopBar()
             }
         ) { paddingValues ->
             val balance=10000
@@ -90,11 +90,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    TransactionListItem("karen Samuel",12345678,500,"today","11:00","recieved")
+    //TransactionListItem("karen Samuel",12345678,500,"today","11:00","recieved")
+    HomeScreen()
 }
 
 @Composable
-fun TopBar(modifier: Modifier = Modifier) {
+fun HomeTopBar(modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,

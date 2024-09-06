@@ -9,6 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gradproj.SpeedoTransferApp.features.mainApp.HomeScreen
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferAmount
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferConfirmation
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
 
 import com.gradproj.SpeedoTransferApp.features.navigation.Navigation
 import com.gradproj.SpeedoTransferApp.ui.theme.SpeedoTransferAppTheme
@@ -19,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpeedoTransferAppTheme {
                 Surface() {
-                    HomeScreen(modifier = Modifier.padding(16.dp))
+                    TransferConfirmation(modifier = Modifier.padding(16.dp))
                 }
             }
         }
