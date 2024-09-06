@@ -22,7 +22,7 @@ val S200 = Color(0xFFE8BA44)
 val S300 = Color(0xFFE3AC1E)
 val S400 = Color(0xFF9F7B15)
 val S500 = Color(0xFF8A6912)
-
+val G0 = Color(0xFFFFFFFF)
 val G10 = Color(0xFFfbfbfb)
 val G20 = Color(0xFFf6f6f6)
 val G30 = Color(0xFFededed)

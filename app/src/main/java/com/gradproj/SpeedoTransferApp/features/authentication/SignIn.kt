@@ -76,14 +76,16 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
             )
 
-            CustomButton(
-                text = "Sign in",
-                onClick = {},
-                buttonType = "Filled",
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .height(55.dp)
-            )
+
+
+        CustomButton(
+            text = "Sign in",
+            onClick = {navController.navigate(Screen.Home.route)},
+            buttonType = "Filled",
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .height(55.dp)
+        )
 
             Row {
                 Text(

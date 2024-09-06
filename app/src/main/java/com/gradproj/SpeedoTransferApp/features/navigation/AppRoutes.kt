@@ -17,12 +17,16 @@ import com.gradproj.SpeedoTransferApp.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.features.profile.Settings
 
+import com.gradproj.SpeedoTransferApp.features.mainApp.HomeScreen
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferAmount
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferConfirmation
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     Column( modifier = modifier) {
-        NavHost(navController = navController, startDestination = Screen.MoreMenu.route) {
+        NavHost(navController = navController, startDestination = Screen.Signin.route) {
             composable(route = Screen.Signin.route) {
                 SignIn(navController)
             }
@@ -48,6 +52,21 @@ fun Navigation(modifier: Modifier = Modifier) {
                     entry.arguments?.getString("password")
                 )
             }
+
+            composable(route = Screen.Home.route) {
+                HomeScreen(navController)
+            }
+
+            composable(route = Screen.TransferConfirmation.route) {
+                TransferConfirmation(navController)
+            }
+            composable(route = Screen.TransferAmount.route) {
+                TransferAmount(navController)
+            }
+            composable(route = Screen.TransferPayment.route) {
+                TransferPayment(navController)
+            }
+
 
             composable(
                 route = Screen.MoreMenu.route

@@ -10,4 +10,10 @@ sealed class Screen(val route: String) {
     object Settings : Screen("Settings")
     object ChangePassword : Screen("ChangePassword")
     object EditProfile : Screen("EditProfile")
+    object Home : Screen("Home")
+    object TransferAmount : Screen("TransferAmount")
+    object TransferPayment : Screen("TransferPayment")
+    object TransferConfirmation : Screen("TransferConfirmation")
+
+
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
+import com.gradproj.SpeedoTransferApp.ui.components.ExtraType
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
@@ -72,7 +73,7 @@ fun SignupContinue(navController: NavController, name: String?, email: String?,p
                 placeHolder = "Select your country",
                 icon = ImageVector.vectorResource(id = R.drawable.drop_downic),
                 inputType = KeyboardType.Text,
-                textState = countryState,
+                textState = countryState, ExtraType.country,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
@@ -82,7 +83,7 @@ fun SignupContinue(navController: NavController, name: String?, email: String?,p
                 placeHolder = "DD/MM/YYY",
                 icon = ImageVector.vectorResource(id = R.drawable.dateic),
                 inputType = KeyboardType.Text,
-                textState = dateState,
+                textState = dateState,ExtraType.date,
                 modifier = Modifier
                     .padding(bottom = 32.dp)
                     .fillMaxWidth()
