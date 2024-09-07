@@ -24,11 +24,14 @@ import com.gradproj.SpeedoTransferApp.features.mainApp.TransferAmount
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferConfirmation
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
 import com.gradproj.SpeedoTransferApp.features.notification.NotificationScreen
+import com.gradproj.SpeedoTransferApp.features.onboarding.OnBoardingAmount
+import com.gradproj.SpeedoTransferApp.features.onboarding.OnBoardingConfirmation
+import com.gradproj.SpeedoTransferApp.features.onboarding.OnBoardingPayment
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    Column( modifier = modifier) {
+    Column(modifier = modifier) {
         NavHost(navController = navController, startDestination = Screen.Signin.route) {
             composable(route = Screen.Signin.route) {
                 SignIn(navController)
@@ -73,38 +76,52 @@ fun Navigation(modifier: Modifier = Modifier) {
 
             composable(
                 route = Screen.MoreMenu.route
-            ){
+            ) {
                 MoreMenu(navController)
             }
 
             composable(
-                route = Screen.Profile.route){
+                route = Screen.Profile.route
+            ) {
                 Profile(navController)
             }
 
             composable(
-                route = Screen.PersonalInformation.route){
+                route = Screen.PersonalInformation.route
+            ) {
                 PersonalInformation(navController)
             }
 
             composable(
-                route = Screen.Settings.route){
+                route = Screen.Settings.route
+            ) {
                 Settings(navController)
             }
 
             composable(
-                route = Screen.ChangePassword.route){
+                route = Screen.ChangePassword.route
+            ) {
                 ChangePassword(navController)
             }
 
             composable(
-                route = Screen.EditProfile.route){
+                route = Screen.EditProfile.route
+            ) {
                 EditProfile(navController)
             }
             composable(
-                route =Screen.NotificationScreen.route,
+                route = Screen.NotificationScreen.route,
                 deepLinks = listOf(navDeepLink { uriPattern = "myapp://details" })
             ) { NotificationScreen(navController) }
+
+            composable(route = Screen.OnBoardingAmount.route)
+            { OnBoardingAmount(navController) }
+
+            composable(route = Screen.OnBoardingConfirmation.route)
+            { OnBoardingConfirmation(navController) }
+            composable(route = Screen.OnBoardingPayment.route)
+            { OnBoardingPayment(navController) }
+
         }
     }
 }

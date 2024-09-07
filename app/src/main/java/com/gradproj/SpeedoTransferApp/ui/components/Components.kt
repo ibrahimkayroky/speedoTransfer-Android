@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.widget.DatePicker
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -88,6 +89,13 @@ import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
 import com.gradproj.SpeedoTransferApp.ui.theme.white
 import com.gradproj.SpeedoTransferApp.ui.theme.yellowGradient
 import java.util.Locale
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.MaterialTheme
+
+import androidx.compose.ui.geometry.Offset
+
 
 enum class ExtraType
 {
@@ -656,11 +664,13 @@ fun TransferCardDetails(name:String,accNumber:Int,transferType:String,modifier: 
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
     FavouritesComponent(name = "Asmaa Desouky", accountNO = "Account xxxx7890", onEditClick = {}, onDeleteClick = {})
 }
+
 
 
 
