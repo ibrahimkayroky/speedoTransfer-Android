@@ -36,6 +36,8 @@ import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.features.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
+import com.gradproj.SpeedoTransferApp.ui.components.TransferCardDetails
+import com.gradproj.SpeedoTransferApp.ui.components.transferDetails
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
@@ -77,7 +79,7 @@ fun TransferConfirmation(navController: NavController, modifier: Modifier = Modi
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(0.5f))
 
             // Bottom Total Amount Section
             Row(
@@ -101,28 +103,11 @@ fun TransferConfirmation(navController: NavController, modifier: Modifier = Modi
 
             // Divider at the bottom
             HorizontalDivider(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                 thickness = 1.dp,
                 color = Color.LightGray
             )
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    TransferCardDetails(senderName,senderAccNumber,"From")
-                    TransferCardDetails(recipientName,recipientAccNumber,"To")
-                }
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_transfer),
-                    contentDescription = "Transfer Icon",
-                    tint = Color.Unspecified
-                )
-            }
+            transferDetails(senderName,senderAccNumber,recipientName,recipientAccNumber)
 
             CustomButton("Confirm", {navController.navigate(Screen.TransferPayment.route)}, "Filled")
             Spacer(modifier = Modifier.height(16.dp))
@@ -257,41 +242,5 @@ fun TransferTopBar(navController: NavController,modifier: Modifier = Modifier) {
             )
         }
 
-    }
-}
-
-@Composable
-fun TransferCardDetails(name:String,accNumber:Int,transferType:String,modifier: Modifier = Modifier) {
-    Card( colors = CardDefaults.cardColors(containerColor = P50),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp)){
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Spacer(modifier = Modifier.width(16.dp))
-            Box (modifier = Modifier
-                .size(60.dp)
-                .background(color = G40, shape = CircleShape),
-                contentAlignment = Alignment.Center ){
-                Icon(
-                    painter = painterResource(id = R.drawable.bankic),
-                    contentDescription = "bank",
-                    modifier = modifier
-                        .size(40.dp), tint = Color.Unspecified
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-
-            ) {
-                Text(text = "$transferType ", color = P300, fontWeight = FontWeight(500), fontSize = 14.sp, modifier = Modifier.padding(bottom = 8.dp))
-                Text(text = name, fontWeight = FontWeight(600), color = G900, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
-                Text(text = "Account xxxxacc $accNumber", color = Color.Gray, fontSize = 14.sp)
-            }
-        }
     }
 }

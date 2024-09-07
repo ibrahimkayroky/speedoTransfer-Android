@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,12 +33,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.features.notification.sendNotification
+
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
+import com.gradproj.SpeedoTransferApp.ui.components.TransferCardDetails
+import com.gradproj.SpeedoTransferApp.ui.components.transferDetails
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
-
 @Composable
 fun TransferPayment(navController: NavController, modifier: Modifier = Modifier) {
     Scaffold(topBar = {
@@ -50,7 +54,7 @@ fun TransferPayment(navController: NavController, modifier: Modifier = Modifier)
         var recipientName :String = "Jonath Smith"
         var recipientAccNumber :Int = 1234
         var amount :Int = 1000
-
+        var context = LocalContext.current
 
         Column( verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,24 +74,7 @@ fun TransferPayment(navController: NavController, modifier: Modifier = Modifier)
 
 
 
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end=16.dp,start = 16.dp)
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    TransferCardDetails(senderName,senderAccNumber,"From")
-                    TransferCardDetails(recipientName,recipientAccNumber,"To")
-                }
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_right_yellow),
-                    contentDescription = "Transfer Icon",
-                    tint = Color.Unspecified
-                )
-            }
+            transferDetails(senderName,senderAccNumber,recipientName,recipientAccNumber)
             // Bottom Total Amount Section
             Row(
                 modifier = Modifier
@@ -117,7 +104,9 @@ fun TransferPayment(navController: NavController, modifier: Modifier = Modifier)
 
 
 
-           CustomButton("Back to Home", {navController.navigate(Screen.Home.route)}, "Filled")
+           CustomButton("Back to Home", {
+               sendNotification("Complete Transaction","Your transfer was successful",R.drawable.error_ic,context)
+               navController.navigate(Screen.Home.route)}, "Filled")
             Spacer(modifier = Modifier.height(16.dp))
 
             CustomButton("Add to Favourite", {}, "Outlined")
@@ -139,14 +128,14 @@ fun TransferPaymentTopBar(navController: NavController,modifier: Modifier = Modi
             .fillMaxWidth()
         ,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment =  Alignment.CenterHorizontally
     ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween.also { Alignment.CenterHorizontally }
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
             Icon(

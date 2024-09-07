@@ -8,8 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.gradproj.SpeedoTransferApp.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.features.authentication.SignupContinue
+import com.gradproj.SpeedoTransferApp.features.authentication.TimeOut
 import com.gradproj.SpeedoTransferApp.features.mainApp.MoreMenu
 import com.gradproj.SpeedoTransferApp.features.profile.ChangePassword
 import com.gradproj.SpeedoTransferApp.features.profile.EditProfile
@@ -21,6 +23,7 @@ import com.gradproj.SpeedoTransferApp.features.mainApp.HomeScreen
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferAmount
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferConfirmation
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
+import com.gradproj.SpeedoTransferApp.features.notification.NotificationScreen
 
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
@@ -98,6 +101,10 @@ fun Navigation(modifier: Modifier = Modifier) {
                 route = Screen.EditProfile.route){
                 EditProfile(navController)
             }
+            composable(
+                route =Screen.NotificationScreen.route,
+                deepLinks = listOf(navDeepLink { uriPattern = "myapp://details" })
+            ) { NotificationScreen(navController) }
         }
     }
 }
