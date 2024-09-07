@@ -24,6 +24,9 @@ import com.gradproj.SpeedoTransferApp.ui.components.FavouritesComponent
 
 @Composable
 fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
+
+    val showBottomSheet = true
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -71,7 +74,7 @@ fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
             FavouritesComponent(
                 name = "Asmaa Desouky",
                 accountNO = "Account xxxx7890",
-                {},
+                showBottomSheet,
                 {},
                 modifier = Modifier
                     .padding(bottom = 16.dp)
@@ -80,7 +83,7 @@ fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
             FavouritesComponent(
                 name = "Asmaa Desouky",
                 accountNO = "Account xxxx7890",
-                {},
+                showBottomSheet,
                 {},
                 modifier = Modifier
                     .padding(bottom = 16.dp)

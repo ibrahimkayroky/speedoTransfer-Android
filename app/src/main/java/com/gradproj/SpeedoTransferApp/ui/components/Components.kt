@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.layout.width
@@ -526,14 +528,90 @@ fun MoreMenuItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavouritesComponent(
     name: String,
     accountNO: String,
-    onEditClick: () -> Unit,
+    bottomSheet: Boolean,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val cardHolderNoState = remember { mutableStateOf("") }
+    val cardHolderNameState = remember { mutableStateOf("") }
+
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+    if (showBottomSheet)
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet = false },
+            sheetState = sheetState,
+            shape = RoundedCornerShape(
+                topStart = 50.dp,
+                topEnd = 50.dp,
+                bottomStart = 0.dp,
+                bottomEnd = 0.dp
+            ),
+            windowInsets = WindowInsets.waterfall,
+            containerColor = Color.White
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.editic),
+                        contentDescription = ""
+                    )
+                    Text(
+                        text = "Edit",
+                        fontSize = 20.sp,
+                        color = G700,
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+
+                ) {
+                    CustomTextField(
+                        header = "Recipient Account", placeHolder = "Enter Cardholder Account",
+                        icon = ImageVector.vectorResource(id = R.drawable.useric),
+                        inputType = KeyboardType.Text,
+                        textState = cardHolderNoState,
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                    )
+
+                    CustomTextField(
+                        header = "Recipient Name", placeHolder = "Enter Cardholder Name",
+                        icon = ImageVector.vectorResource(id = R.drawable.useric),
+                        inputType = KeyboardType.Text,
+                        textState = cardHolderNameState,
+                        modifier = Modifier
+                            .padding(bottom = 32.dp)
+                    )
+
+                    CustomButton(
+                        text = "Save",
+                        onClick = { },
+                        buttonType = "Filled",
+                        modifier = Modifier
+                            .padding(bottom = 100.dp)
+                    )
+                }
+            }
+        }
+
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(P50),
@@ -556,7 +634,7 @@ fun FavouritesComponent(
             )
             Column(
                 modifier = Modifier
-                    .padding(end = 55.dp)
+                    .padding(end = 39.dp)
             ){
                 Text(
                     text = name,
@@ -577,11 +655,11 @@ fun FavouritesComponent(
                 painter = painterResource(id = R.drawable.editic),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(G100),
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clickable {
-                            onEditClick()
-                        }
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clickable {
+                        showBottomSheet = bottomSheet
+                    }
             )
 
             Image(
@@ -601,7 +679,7 @@ fun FavouritesComponent(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
-    FavouritesComponent(name = "Asmaa Desouky", accountNO = "Account xxxx7890", onEditClick = {}, onDeleteClick = {})
+    FavouritesComponent(name = "Asmaa Desouky", accountNO = "Account xxxx7890", true, onDeleteClick = {})
 }
 
 

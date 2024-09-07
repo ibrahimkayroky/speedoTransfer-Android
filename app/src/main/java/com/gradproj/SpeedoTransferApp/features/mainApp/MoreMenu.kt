@@ -192,7 +192,7 @@ fun MoreMenu(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.favoriteic),
             modifier = Modifier
                 .clickable {
-
+                    navController.navigate(Screen.FavoritesMenu.route)
                 }
         )
 

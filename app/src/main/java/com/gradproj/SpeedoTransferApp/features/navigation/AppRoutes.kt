@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.gradproj.SpeedoTransferApp.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.features.authentication.SignupContinue
+import com.gradproj.SpeedoTransferApp.features.mainApp.Favourites
 import com.gradproj.SpeedoTransferApp.features.mainApp.MoreMenu
 import com.gradproj.SpeedoTransferApp.features.profile.ChangePassword
 import com.gradproj.SpeedoTransferApp.features.profile.EditProfile
@@ -26,7 +27,7 @@ import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     Column( modifier = modifier) {
-        NavHost(navController = navController, startDestination = Screen.Signin.route) {
+        NavHost(navController = navController, startDestination = Screen.MoreMenu.route) {
             composable(route = Screen.Signin.route) {
                 SignIn(navController)
             }
@@ -98,6 +99,14 @@ fun Navigation(modifier: Modifier = Modifier) {
                 route = Screen.EditProfile.route){
                 EditProfile(navController)
             }
+
+            composable(
+                route = Screen.FavoritesMenu.route
+            ) {
+                Favourites(navController)
+            }
+
+
         }
     }
 }

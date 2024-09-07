@@ -14,5 +14,6 @@ sealed class Screen(val route: String) {
     object TransferAmount : Screen("TransferAmount")
     object TransferPayment : Screen("TransferPayment")
     object TransferConfirmation : Screen("TransferConfirmation")
+    object FavoritesMenu: Screen("FavoritesMenu")
 
 }
