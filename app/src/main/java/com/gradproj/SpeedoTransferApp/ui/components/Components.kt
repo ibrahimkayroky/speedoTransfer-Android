@@ -63,6 +63,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -616,7 +617,7 @@ fun FavouritesComponent(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(P50),
         modifier = modifier
-            .width(344.dp)
+            .width(380.dp)
             .height(88.dp)
     ) {
         Row(
@@ -634,7 +635,7 @@ fun FavouritesComponent(
             )
             Column(
                 modifier = Modifier
-                    .padding(end = 39.dp)
+                    .padding(end = 70.dp)
             ){
                 Text(
                     text = name,
@@ -676,10 +677,83 @@ fun FavouritesComponent(
     }
 }
 
+@Composable
+fun TransactionComponent(modifier: Modifier = Modifier) {
+    val name = "Ahmed Mohamed"
+    val cardType = "Visa"
+    val cardCompany = "MasterCard"
+    val cardNumber = "1234"
+    val transcationDate = "12/12/2023"
+    val transcationAmount = "1000"
+    val transcationSuccessful = true
+
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(P50),
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 8.dp)
+        ) {
+            Image(painter = painterResource(id = R.drawable.card_box), contentDescription = "bank card icon")
+            Column(
+            ) {
+                Text(
+                    text = name,
+                    color = G900,
+                    fontWeight = W500,
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                )
+                Text(
+                    text = "$cardType . $cardCompany . $cardNumber",
+                    color = G700,
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                )
+                Text(
+                    text = transcationDate,
+                    color = G100,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "$$transcationAmount",
+                    color = P300,
+                    fontWeight = W500,
+                    fontSize = 16.sp,
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.chevron_rightic),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(start = 46.dp, bottom = 8.dp)
+                )
+                Image(
+                    painter = if (transcationSuccessful) {
+                        painterResource(id = R.drawable.successful)
+                    } else {
+                        painterResource(id = R.drawable.failed)
+                    }, contentDescription = ""
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
-    FavouritesComponent(name = "Asmaa Desouky", accountNO = "Account xxxx7890", true, onDeleteClick = {})
+    TransactionComponent()
 }
 
 

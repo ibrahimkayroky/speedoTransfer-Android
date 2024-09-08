@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpeedoTransferAppTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize() // Ensure Surface fills the entire screen
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Box(
                         modifier = Modifier

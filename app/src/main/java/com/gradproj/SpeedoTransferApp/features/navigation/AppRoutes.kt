@@ -19,6 +19,7 @@ import com.gradproj.SpeedoTransferApp.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.features.profile.Settings
 
 import com.gradproj.SpeedoTransferApp.features.mainApp.HomeScreen
+import com.gradproj.SpeedoTransferApp.features.mainApp.TransactionsList
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferAmount
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferConfirmation
 import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
@@ -106,6 +107,11 @@ fun Navigation(modifier: Modifier = Modifier) {
                 Favourites(navController)
             }
 
+            composable(
+                route = Screen.TranscationsList.route
+            ) {
+                TransactionsList(navController)
+            }
 
         }
     }

@@ -29,8 +29,8 @@ fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(16.dp)
+        modifier = Modifier
+            .padding(top = 16.dp)
     ){
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -66,7 +66,7 @@ fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
             Text(
                 text = "Your favourites list",
                 fontSize = 20.sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.W600,
                 modifier = Modifier
                     .padding(bottom = 16.dp)
             )
@@ -89,9 +89,6 @@ fun Favourites(navController: NavController, modifier: Modifier = Modifier) {
                     .padding(bottom = 16.dp)
             )
         }
-
-
-
     }
 
 }
