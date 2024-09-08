@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.gradproj.SpeedoTransferApp.features.navigation.Navigation
 import com.gradproj.SpeedoTransferApp.ui.theme.SpeedoTransferAppTheme
 import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
@@ -20,6 +21,7 @@ import com.gradproj.SpeedoTransferApp.ui.theme.white
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             SpeedoTransferAppTheme {
                 Surface(

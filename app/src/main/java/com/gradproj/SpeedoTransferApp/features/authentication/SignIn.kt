@@ -36,7 +36,9 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
     val passwordState = remember { mutableStateOf("") }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Text(
                 text = "Sign In",

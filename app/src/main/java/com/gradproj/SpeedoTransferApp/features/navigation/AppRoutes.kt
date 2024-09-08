@@ -28,7 +28,7 @@ import com.gradproj.SpeedoTransferApp.features.mainApp.TransferPayment
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     Column( modifier = modifier) {
-        NavHost(navController = navController, startDestination = Screen.MoreMenu.route) {
+        NavHost(navController = navController, startDestination = Screen.Signin.route) {
             composable(route = Screen.Signin.route) {
                 SignIn(navController)
             }

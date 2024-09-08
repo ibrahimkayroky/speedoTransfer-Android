@@ -4,4 +4,5 @@
     <string name="server_error">Server error...</string>
     <string name="call_us">Call Us</string>
     <string name="message_us">Message Us</string>
+    <string name="speedo">Speedo Transfer</string>
 </resources>

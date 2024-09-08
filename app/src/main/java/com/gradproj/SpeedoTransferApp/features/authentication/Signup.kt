@@ -45,6 +45,7 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxWidth()
+            .padding(16.dp)
     ) {
 
         Text(
