@@ -34,6 +34,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
+    GradientBackground {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
@@ -80,14 +81,14 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
 
 
-        CustomButton(
-            text = "Sign in",
-            onClick = {navController.navigate(Screen.Home.route)},
-            buttonType = "Filled",
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .height(55.dp)
-        )
+            CustomButton(
+                text = "Sign in",
+                onClick = {navController.navigate(Screen.Home.route)},
+                buttonType = "Filled",
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .height(55.dp)
+            )
 
             Row {
                 Text(
@@ -105,7 +106,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
                 )
             }
         }
-
+    }
 }
 
 

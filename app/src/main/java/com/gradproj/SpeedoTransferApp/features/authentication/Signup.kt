@@ -40,121 +40,122 @@ fun SignUp(navController: NavController, modifier: Modifier = Modifier) {
     val isErrorInEmail = remember { mutableStateOf(false) }
     val isErrorInPassword = remember { mutableStateOf(false) }
     val isErrorInConfirmPassword = remember { mutableStateOf(false) }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-
-        Text(
-            text = "Sign Up",
-            fontWeight = FontWeight(500),
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(bottom = 55.dp, top = 8.dp)
-        )
-        Text(
-            text = "Speedo Transfer",
-            fontWeight = FontWeight(600),
-            fontSize = 24.sp,
-            modifier = Modifier
-                .padding(bottom = 65.dp)
-        )
-
-        CustomTextField(
-            header = "Full Name",
-            placeHolder = "Enter Your Full Name",
-            icon = ImageVector.vectorResource(id = R.drawable.useric),
-            inputType = KeyboardType.Text,
-            textState = nameState,
-            errorState = isErrorInName,
-            errorMessage = "Enter a valid name",
-            onValueChange = {
-                nameState.value = it
-                isErrorInName.value = !isInputNotEmpty(it)
-            },
-            modifier = Modifier
-                .padding(bottom = 8.dp)
+    GradientBackground {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
                 .fillMaxWidth()
-        )
+                .padding(16.dp)
+        ) {
 
-        CustomTextField(
-            header = "Email",
-            placeHolder = "Enter Your Email",
-            icon = ImageVector.vectorResource(id = R.drawable.emailic),
-            inputType = KeyboardType.Text,
-            textState = emailState,
-            errorState = isErrorInEmail,
-            errorMessage = "Enter a valid email",
-            onValueChange = {
-                emailState.value = it
-                isErrorInEmail.value = !isEmailValid(it)
-            },
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth()
-        )
-
-        CustomTextField(
-            header = "Password",
-            placeHolder = "Enter Your password",
-            icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Password,
-            textState = passwordState,
-            errorState = isErrorInPassword,
-            errorMessage = "Password is weak",
-            onValueChange = {
-                passwordState.value = it
-                isErrorInPassword.value = !isPasswordStrong(it)
-            },
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .fillMaxWidth()
-        )
-
-        CustomTextField(
-            header = "Confirm password",
-            placeHolder = "Enter Your password",
-            icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
-            inputType = KeyboardType.Password,
-            textState = confirmPasswordState,
-            errorState = isErrorInConfirmPassword,
-            errorMessage = "Passwords do not match",
-            onValueChange = {
-                confirmPasswordState.value = it
-                isErrorInConfirmPassword.value = it != passwordState.value
-            },
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .fillMaxWidth()
-        )
-
-        CustomButton(
-            text = "Sign up",
-            onClick = {
-                if(validateInput(nameState.value, emailState.value, passwordState.value, confirmPasswordState.value)) {
-                    navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}")
-                }
-            },
-            buttonType = "Filled",
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .height(55.dp)
-        )
-
-        Row {
-            Text(text = "Already have an account? ", color = Color(0xFF898886))
             Text(
-                text = "Sign in",
-                color = Color(0xFF871E35),
-                textDecoration = TextDecoration.Underline,
+                text = "Sign Up",
+                fontWeight = FontWeight(500),
+                fontSize = 20.sp,
                 modifier = Modifier
-                    .clickable {
-                        navController.navigate(Screen.Signin.route)
-                    }
+                    .padding(bottom = 55.dp, top = 8.dp)
             )
+            Text(
+                text = "Speedo Transfer",
+                fontWeight = FontWeight(600),
+                fontSize = 24.sp,
+                modifier = Modifier
+                    .padding(bottom = 65.dp)
+            )
+
+            CustomTextField(
+                header = "Full Name",
+                placeHolder = "Enter Your Full Name",
+                icon = ImageVector.vectorResource(id = R.drawable.useric),
+                inputType = KeyboardType.Text,
+                textState = nameState,
+                errorState = isErrorInName,
+                errorMessage = "Enter a valid name",
+                onValueChange = {
+                    nameState.value = it
+                    isErrorInName.value = !isInputNotEmpty(it)
+                },
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomTextField(
+                header = "Email",
+                placeHolder = "Enter Your Email",
+                icon = ImageVector.vectorResource(id = R.drawable.emailic),
+                inputType = KeyboardType.Text,
+                textState = emailState,
+                errorState = isErrorInEmail,
+                errorMessage = "Enter a valid email",
+                onValueChange = {
+                    emailState.value = it
+                    isErrorInEmail.value = !isEmailValid(it)
+                },
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomTextField(
+                header = "Password",
+                placeHolder = "Enter Your password",
+                icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
+                inputType = KeyboardType.Password,
+                textState = passwordState,
+                errorState = isErrorInPassword,
+                errorMessage = "Password is weak",
+                onValueChange = {
+                    passwordState.value = it
+                    isErrorInPassword.value = !isPasswordStrong(it)
+                },
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomTextField(
+                header = "Confirm password",
+                placeHolder = "Enter Your password",
+                icon = ImageVector.vectorResource(id = R.drawable.eye_compic_1),
+                inputType = KeyboardType.Password,
+                textState = confirmPasswordState,
+                errorState = isErrorInConfirmPassword,
+                errorMessage = "Passwords do not match",
+                onValueChange = {
+                    confirmPasswordState.value = it
+                    isErrorInConfirmPassword.value = it != passwordState.value
+                },
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .fillMaxWidth()
+            )
+
+            CustomButton(
+                text = "Sign up",
+                onClick = {
+                    if(validateInput(nameState.value, emailState.value, passwordState.value, confirmPasswordState.value)) {
+                        navController.navigate(Screen.SignUpContinue.route + "/${nameState.value}" + "/${emailState.value}" + "/${passwordState.value}")
+                    }
+                },
+                buttonType = "Filled",
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .height(55.dp)
+            )
+
+            Row {
+                Text(text = "Already have an account? ", color = Color(0xFF898886))
+                Text(
+                    text = "Sign in",
+                    color = Color(0xFF871E35),
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Screen.Signin.route)
+                        }
+                )
+            }
         }
     }
 }

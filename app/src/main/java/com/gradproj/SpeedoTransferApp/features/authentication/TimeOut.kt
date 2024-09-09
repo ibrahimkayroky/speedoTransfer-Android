@@ -64,7 +64,6 @@ fun TimeOut(modifier: Modifier = Modifier) {
             }
         }
     GradientBackground {
-
         Scaffold(
             snackbarHost = {
                 Box(
