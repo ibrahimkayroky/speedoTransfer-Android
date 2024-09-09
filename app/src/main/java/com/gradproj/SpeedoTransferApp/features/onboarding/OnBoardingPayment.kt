@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,12 +28,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+import com.gradproj.SpeedoTransferApp.features.prefrences.PrefrencesHelper
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 
+
 @Composable
 fun OnBoardingPayment(navController: NavController) {
+    val context = LocalContext.current
+
     // Root container
     Column(
         modifier = Modifier
@@ -48,7 +53,11 @@ fun OnBoardingPayment(navController: NavController) {
                 .padding(8.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            TextButton(onClick = { navController.navigate(Screen.Signin.route) }) {
+            TextButton(onClick = {   PrefrencesHelper.setFirstTimeLaunch(context, false)
+                navController.navigate(Screen.Signin.route) {
+                    popUpTo(0) { inclusive = true }
+                }
+            }) {
                 Text("Skip", color =G900)
             }
         }

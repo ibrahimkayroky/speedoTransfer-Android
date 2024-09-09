@@ -3,7 +3,9 @@ package com.gradproj.SpeedoTransferApp.features.navigation
 import SignIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,10 +31,24 @@ import com.gradproj.SpeedoTransferApp.features.onboarding.OnBoardingConfirmation
 import com.gradproj.SpeedoTransferApp.features.onboarding.OnBoardingPayment
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController, isFirstTime: Boolean, modifier: Modifier = Modifier) {
+    //val navController = rememberNavController()
     Column(modifier = modifier) {
-        NavHost(navController = navController, startDestination = Screen.Signin.route) {
+        NavHost(navController = navController, startDestination = Screen.FirstScreen.route) {
+            composable(Screen.FirstScreen.route) {
+                LaunchedEffect(Unit) {
+                    if (isFirstTime) {
+                        navController.navigate(Screen.OnBoardingAmount.route) {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate(Screen.Signin.route) {popUpTo(0) { inclusive = true }
+                        }
+                    }
+                }
+            }
+
+
             composable(route = Screen.Signin.route) {
                 SignIn(navController)
             }

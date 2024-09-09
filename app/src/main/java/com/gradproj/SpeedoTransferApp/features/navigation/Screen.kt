@@ -18,6 +18,6 @@ sealed class Screen(val route: String) {
     object OnBoardingAmount : Screen("OnBoardingAmount")
     object OnBoardingConfirmation : Screen("OnBoardingConfirmation")
     object OnBoardingPayment : Screen("OnBoardingPayment")
-
+  object  FirstScreen: Screen("FirstScreen")
 
 }
