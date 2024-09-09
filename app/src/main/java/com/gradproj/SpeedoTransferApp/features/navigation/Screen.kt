@@ -16,4 +16,10 @@ sealed class Screen(val route: String) {
     object TransferConfirmation : Screen("TransferConfirmation")
     object FavoritesMenu: Screen("FavoritesMenu")
     object TranscationsList: Screen("TranscationsList")
+    object NotificationScreen : Screen("Notification")
+    object OnBoardingAmount : Screen("OnBoardingAmount")
+    object OnBoardingConfirmation : Screen("OnBoardingConfirmation")
+    object OnBoardingPayment : Screen("OnBoardingPayment")
+  object  FirstScreen: Screen("FirstScreen")
+
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.widget.DatePicker
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,6 +28,7 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -90,6 +92,13 @@ import com.gradproj.SpeedoTransferApp.ui.theme.redGradient
 import com.gradproj.SpeedoTransferApp.ui.theme.white
 import com.gradproj.SpeedoTransferApp.ui.theme.yellowGradient
 import java.util.Locale
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.MaterialTheme
+
+import androidx.compose.ui.geometry.Offset
+
 
 enum class ExtraType
 {
@@ -750,11 +759,70 @@ fun TransactionComponent(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun transferDetails(senderName:String,senderAccNumber:Int,recipientName:String,recipientAccNumber:Int,modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end=16.dp,start = 16.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            TransferCardDetails(senderName,senderAccNumber,"From")
+            TransferCardDetails(recipientName,recipientAccNumber,"To")
+        }
+        Icon(
+            painter = painterResource(id = R.drawable.ic_right_yellow),
+            contentDescription = "Transfer Icon",
+            tint = Color.Unspecified
+        )
+    }
+
+}
+@Composable
+fun TransferCardDetails(name:String,accNumber:Int,transferType:String,modifier: Modifier = Modifier) {
+    Card( colors = CardDefaults.cardColors(containerColor = P50),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)){
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.width(16.dp))
+            Box (modifier = Modifier
+                .size(60.dp)
+                .background(color = G40, shape = CircleShape),
+                contentAlignment = Alignment.Center ){
+                Icon(
+                    painter = painterResource(id = R.drawable.bankic),
+                    contentDescription = "bank",
+                    modifier = modifier
+                        .size(40.dp), tint = Color.Unspecified
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+
+            ) {
+                Text(text = "$transferType ", color = P300, fontWeight = FontWeight(500), fontSize = 14.sp, modifier = Modifier.padding(bottom = 8.dp))
+                Text(text = name, fontWeight = FontWeight(600), color = G900, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
+                Text(text = "Account xxxxacc $accNumber", color = Color.Gray, fontSize = 14.sp)
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
     TransactionComponent()
 }
+
 
 
 
