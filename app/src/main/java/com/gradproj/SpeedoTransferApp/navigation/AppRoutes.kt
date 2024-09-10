@@ -1,18 +1,29 @@
 package com.gradproj.SpeedoTransferApp.navigation
 
 import SignIn
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignupContinue
+import com.gradproj.SpeedoTransferApp.ui.features.authentication.TimeOut
 import com.gradproj.SpeedoTransferApp.ui.features.mainApp.Favourites
 import com.gradproj.SpeedoTransferApp.ui.features.mainApp.HomeScreen
 import com.gradproj.SpeedoTransferApp.ui.features.mainApp.MoreMenu
@@ -29,11 +40,19 @@ import com.gradproj.SpeedoTransferApp.ui.features.profile.EditProfile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Settings
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun Navigation(navController: NavHostController, isFirstTime: Boolean, modifier: Modifier = Modifier) {
+fun Navigation(
+    navController: NavHostController,
+    isFirstTime: Boolean,
+    modifier: Modifier = Modifier
+) {
     //val navController = rememberNavController()
+
     Column(modifier = modifier) {
         NavHost(navController = navController, startDestination = Screen.FirstScreen.route) {
             composable(Screen.FirstScreen.route) {
@@ -43,7 +62,8 @@ fun Navigation(navController: NavHostController, isFirstTime: Boolean, modifier:
                             popUpTo(0) { inclusive = true }
                         }
                     } else {
-                        navController.navigate(Screen.Signin.route) {popUpTo(0) { inclusive = true }
+                        navController.navigate(Screen.Signin.route) {
+                            popUpTo(0) { inclusive = true }
                         }
                     }
                 }
@@ -77,63 +97,92 @@ fun Navigation(navController: NavHostController, isFirstTime: Boolean, modifier:
             }
 
             composable(route = Screen.Home.route) {
-                HomeScreen(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    HomeScreen(navController)
+                }
             }
 
             composable(route = Screen.TransferConfirmation.route) {
-                TransferConfirmation(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    TransferConfirmation(navController)
+                }
             }
             composable(route = Screen.TransferAmount.route) {
-                TransferAmount(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    TransferAmount(navController)
+
+                }
             }
             composable(route = Screen.TransferPayment.route) {
-                TransferPayment(navController)
+                AppWithInactivityTimeout(navController = navController) {
+
+                    TransferPayment(navController)
+                }
             }
 
 
             composable(
                 route = Screen.MoreMenu.route
             ) {
-                MoreMenu(navController)
+                AppWithInactivityTimeout(navController = navController) {
+
+                    MoreMenu(navController)
+                }
             }
 
             composable(
                 route = Screen.Profile.route
             ) {
-                Profile(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    Profile(navController)
+
+                }
             }
 
+
             composable(
-                route = Screen.PersonalInformation.route){
-                PersonalInformation(navController)
+                route = Screen.PersonalInformation.route
+            ) {
+                AppWithInactivityTimeout(navController = navController) {
+                    PersonalInformation(navController)
+                }
             }
 
             composable(
                 route = Screen.Settings.route
             ) {
-                Settings(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    Settings(navController)
+                }
             }
 
             composable(
-                route = Screen.ChangePassword.route){
+                route = Screen.ChangePassword.route
+            ) {
+
                 ChangePassword(navController)
             }
 
             composable(
-                route = Screen.EditProfile.route){
+                route = Screen.EditProfile.route
+            ) {
                 EditProfile(navController)
             }
 
             composable(
                 route = Screen.FavoritesMenu.route
             ) {
-                Favourites(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    Favourites(navController)
+                }
             }
 
             composable(
                 route = Screen.TranscationsList.route
             ) {
-                TransactionsList(navController)
+                AppWithInactivityTimeout(navController = navController) {
+                    TransactionsList(navController)
+                }
             }
 
             composable(
@@ -142,16 +191,75 @@ fun Navigation(navController: NavHostController, isFirstTime: Boolean, modifier:
             ) { NotificationScreen(navController) }
 
             composable(route = Screen.OnBoardingAmount.route)
-            { OnBoardingAmount(navController) }
+            {
+                AppWithInactivityTimeout(navController = navController) {
+                    OnBoardingAmount(navController)
+                }
+            }
 
             composable(route = Screen.OnBoardingConfirmation.route)
-            { OnBoardingConfirmation(navController) }
+            {
+                AppWithInactivityTimeout(navController = navController) {
+                    OnBoardingConfirmation(navController)
+                }
+            }
             composable(route = Screen.OnBoardingPayment.route)
-            { OnBoardingPayment(navController) }
-
+            {
+                AppWithInactivityTimeout(navController = navController) {
+                    OnBoardingPayment(navController)
+                }
+            }
+            composable(route = "timeoutScreen") {
+                AppWithInactivityTimeout(navController = navController) {
+                    TimeOut(navController)
+                }
+            }
         }
     }
 }
+
+
+@Composable
+fun AppWithInactivityTimeout(
+    navController: NavController,
+    timeoutDuration: Long =  120000L// 5 seconds for example
+    , content: @Composable () -> Unit
+) {
+    // Coroutine scope to handle timers
+    val scope = rememberCoroutineScope()
+    var lastInteractionTime by remember { mutableStateOf(System.currentTimeMillis()) }
+
+    // Start a coroutine that tracks inactivity
+    DisposableEffect(Unit) {
+        val job = scope.launch {
+            while (isActive) {
+                if (System.currentTimeMillis() - lastInteractionTime > timeoutDuration) {
+                    navController.navigate("timeoutScreen") {
+                        popUpTo("mainScreen") { inclusive = true }
+                    }
+                    break
+                }
+                delay(1000L) // Check every second
+            }
+        }
+        onDispose { job.cancel() }
+    }
+
+    // Detect user interaction across the app
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures {
+                    lastInteractionTime = System.currentTimeMillis()
+                }
+            }
+    ) {
+        // Your app content goes here
+        content()
+    }
+}
+
 
 
 

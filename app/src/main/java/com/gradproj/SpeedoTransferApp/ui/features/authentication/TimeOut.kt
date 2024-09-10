@@ -38,6 +38,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
@@ -48,7 +50,7 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import kotlinx.coroutines.launch
 
 @Composable
-fun TimeOut(modifier: Modifier = Modifier) {
+fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
 
         val nameState = remember { mutableStateOf("") }
         val passwordState = remember { mutableStateOf("") }
@@ -172,5 +174,5 @@ fun TimeOut(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SignInpreview() {
-    TimeOut()
+    TimeOut(rememberNavController())
 }
