@@ -76,7 +76,7 @@ import androidx.navigation.NavController
 
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
-import com.gradproj.SpeedoTransferApp.features.navigation.Screen
+
 
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
@@ -98,6 +98,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.ui.geometry.Offset
+import com.gradproj.SpeedoTransferApp.navigation.Screen
 
 
 enum class ExtraType
