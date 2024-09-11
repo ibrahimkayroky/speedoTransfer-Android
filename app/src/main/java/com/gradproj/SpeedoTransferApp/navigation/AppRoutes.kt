@@ -26,6 +26,8 @@ import androidx.navigation.navDeepLink
 import com.gradproj.SpeedoTransferApp.api.RetrofitClient
 import com.gradproj.SpeedoTransferApp.api.UserApiCallable
 import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.FavoriteRepository
+import com.gradproj.SpeedoTransferApp.repository.TransactionRepository
 import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignupContinue
@@ -46,6 +48,10 @@ import com.gradproj.SpeedoTransferApp.ui.features.profile.EditProfile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Settings
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModelFactory
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 import kotlinx.coroutines.delay
@@ -66,7 +72,22 @@ fun Navigation(
     val viewModel: UserViewModel = viewModel(
         factory = UserViewModelFactory(userRepository)
     )
-    //val navController = rememberNavController()
+
+    val transactionRepository = TransactionRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val TransViewModel: TransViewModel = viewModel(
+        factory = TransViewModelFactory(transactionRepository)
+    )
+
+//    val FavoriteRepository = FavoriteRepository(
+//        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+//        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+//    )
+//    val FavoriteViewModel: FavoriteViewModel = viewModel(
+//        factory = FavoriteViewModelFactory(FavoriteRepository)
+//    )
 
     Column(modifier = modifier) {
         NavHost(navController = navController, startDestination = Screen.FirstScreen.route) {
@@ -114,13 +135,30 @@ fun Navigation(
             composable(route = Screen.Home.route) {
                 AppWithInactivityTimeout(navController = navController) {
 
-                    HomeScreen(navController,viewModel)
+                    HomeScreen(navController, viewModel = viewModel, TransViewModel = TransViewModel)
                 }
             }
 
-            composable(route = Screen.TransferConfirmation.route) {
+            composable(route = Screen.TransferConfirmation.route + "/{amount}" + "/{name}" + "/{email}",
+                arguments = listOf(
+                    navArgument("amount") {},
+                    navArgument("name") {},
+                    navArgument("email") {})
+            ) {
+                backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount") ?: ""
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                val email = backStackEntry.arguments?.getString("email") ?: ""
+
                 AppWithInactivityTimeout(navController = navController) {
-                    TransferConfirmation(navController)
+                    TransferConfirmation(
+                        navController,
+                        viewModel = viewModel,
+                        amount = amount,
+                        name = name,
+                        email = email
+                    )
+
                 }
             }
             composable(route = Screen.TransferAmount.route) {

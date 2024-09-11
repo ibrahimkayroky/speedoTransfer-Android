@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.ui.features.authentication
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +24,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,19 +42,39 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.navigation.Screen
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
 import kotlinx.coroutines.launch
 
 @Composable
 fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
+        val context = LocalContext.current
+
+        // Create UserRepository instance
+        val userRepository = UserRepository(
+            apiService = RetrofitClient.api, // Adjust according to how you instantiate your API service
+            sharedPreferencesManager = SharedPreferencesManager(context)
+        )
+
+        // Create the ViewModel using the factory
+        val authViewModel: AuthViewModel = viewModel(
+            factory = AuthViewModelFactory(userRepository, context)
+        )
+        val loginState by authViewModel.loginState.collectAsState()
 
         val nameState = remember { mutableStateOf("") }
         val passwordState = remember { mutableStateOf("") }
@@ -155,13 +179,27 @@ fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
 
                 CustomButton(
                     text = "Sign in",
-                    onClick = {},
+                    onClick = {
+                        Log.d("trace", "Button clicked:${nameState.value},${passwordState.value}")
+                        authViewModel.login(nameState.value, passwordState.value)
+
+                    },
                     buttonType = "Filled",
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .height(55.dp)
                 )
 
+                when (loginState) {
+                    true -> {
+                        Text("Login successful")
+                        LaunchedEffect(Unit) {
+                            navController.navigate(Screen.Home.route)
+                        }
+                    }
+                    false -> Text("Login failed")
+                    null -> Text("Please enter your credentials")
+                }
 
             }
             // Screen content

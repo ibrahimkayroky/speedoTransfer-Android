@@ -1,8 +1,12 @@
 package com.gradproj.SpeedoTransferApp.api
 
 import com.gradproj.SpeedoTransferApp.constants.Constants
+import com.gradproj.SpeedoTransferApp.models.FavoriteResponse
 import com.gradproj.SpeedoTransferApp.models.LoginRequest
 import com.gradproj.SpeedoTransferApp.models.LoginResponse
+import com.gradproj.SpeedoTransferApp.models.TransactionResponse
+import com.gradproj.SpeedoTransferApp.models.TransferRequest
+import com.gradproj.SpeedoTransferApp.models.TransferResponse
 import com.gradproj.SpeedoTransferApp.models.UserDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,6 +27,16 @@ interface UserApiCallable {
     @GET(Constants.GET_USER)
     suspend fun getUserData(  @Header("Authorization") token: String): Response<UserDataResponse>
 
+    @GET(Constants.GET_TRANSACTIONS)
+    suspend fun getTransactions(  @Header("Authorization") token: String): Response<TransactionResponse>
+
+    @POST(Constants.TRANSFER_URL)
+    suspend fun transfer(
+        @Body TransferRequest: TransferRequest
+    ): Response<TransferResponse>
+
+    @GET(Constants.GET_FAVORITES)
+    suspend fun getFavorites(  @Header("Authorization") token: String): Response<FavoriteResponse>
 
 
 }
