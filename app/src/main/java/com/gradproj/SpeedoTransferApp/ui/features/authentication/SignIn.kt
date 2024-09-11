@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
@@ -29,12 +31,36 @@ import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.observe
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
 
 @Composable
 fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
 
+    // Create UserRepository instance
+    val userRepository = UserRepository(
+        apiService = RetrofitClient.api, // Adjust according to how you instantiate your API service
+        sharedPreferencesManager = SharedPreferencesManager(context)
+    )
+
+    // Create the ViewModel using the factory
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(userRepository, context)
+    )
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
+    val loginState by authViewModel.loginState.collectAsState()
     GradientBackground {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,13 +110,26 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 
             CustomButton(
                 text = "Sign in",
-                onClick = {navController.navigate(Screen.Home.route)},
+                onClick = {
+                    Log.d("trace", "Button clicked:${emailState.value},${passwordState.value}")
+                    authViewModel.login(emailState.value, passwordState.value)
+
+                          },
                 buttonType = "Filled",
                 modifier = Modifier
                     .padding(bottom = 16.dp)
                     .height(55.dp)
             )
-
+            when (loginState) {
+                true -> {
+                    Text("Login successful")
+                    LaunchedEffect(Unit) {
+                     navController.navigate(Screen.Home.route)
+                    }
+                }
+                false -> Text("Login failed")
+                null -> Text("Please enter your credentials")
+            }
             Row {
                 Text(
                     text = "Don’t have an account? ",

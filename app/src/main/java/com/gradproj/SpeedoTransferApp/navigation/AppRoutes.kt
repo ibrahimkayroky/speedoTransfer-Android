@@ -15,12 +15,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.api.UserApiCallable
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignupContinue
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.TimeOut
@@ -40,6 +46,8 @@ import com.gradproj.SpeedoTransferApp.ui.features.profile.EditProfile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Settings
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -51,6 +59,13 @@ fun Navigation(
     isFirstTime: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val userRepository = UserRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val viewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(userRepository)
+    )
     //val navController = rememberNavController()
 
     Column(modifier = modifier) {
@@ -98,7 +113,8 @@ fun Navigation(
 
             composable(route = Screen.Home.route) {
                 AppWithInactivityTimeout(navController = navController) {
-                    HomeScreen(navController)
+
+                    HomeScreen(navController,viewModel)
                 }
             }
 

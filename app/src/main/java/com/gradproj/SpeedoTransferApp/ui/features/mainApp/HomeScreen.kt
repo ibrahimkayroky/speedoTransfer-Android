@@ -22,19 +22,28 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.models.UserDataResponse
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
@@ -43,17 +52,30 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 
 @Composable
-fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController,viewModel: UserViewModel, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+
+
+    // Collect user data from the ViewModel
+    val userData by viewModel.userData.collectAsState()
+
+
     GradientBackground2 {
+
         Scaffold(
             bottomBar = { BottomBar(navController,"home") },
             topBar={
-                HomeTopBar()
+                HomeTopBar(userData)
             }
         ) { paddingValues ->
-            val balance=10000
+            val balance=userData?.balance
             Column( modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues) ) {
@@ -87,23 +109,25 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
         }
     }
 }
+/*
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
     //TransactionListItem("karen Samuel",12345678,500,"today","11:00","recieved")
-    HomeScreen(rememberNavController())
+    HomeScreen(rememberNavController(),viewModel = viewModel(factory = UserViewModelFactory())
 }
+*/
 
 @Composable
-fun HomeTopBar(modifier: Modifier = Modifier) {
+fun HomeTopBar(userData: UserDataResponse?, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
     ) {
         // Api will change it 
-        val name = "karen"
+        val name = userData?.name ?: "User"
         val pic = R.drawable.error_ic
         Row(
             horizontalArrangement = Arrangement.SpaceBetween, // Distributes space between elements
