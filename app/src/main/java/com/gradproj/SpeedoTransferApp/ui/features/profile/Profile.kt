@@ -107,7 +107,7 @@ fun Profile(navController: NavController, modifier: Modifier = Modifier) {
         )
         ProfileComponent(
             navController,
-            pageToGo = "",
+            pageToGo = "TransactionsList",
             header = "Payment history",
             description = "view your transactions",
             icon = ImageVector.vectorResource(id = R.drawable.history_1ic),
@@ -115,7 +115,7 @@ fun Profile(navController: NavController, modifier: Modifier = Modifier) {
         )
         ProfileComponent(
             navController,
-            pageToGo = "",
+            pageToGo = "FavoritesMenu",
             header = "My Favourite list",
             description = "view your favourites",
             icon = ImageVector.vectorResource(id = R.drawable.favoriteic),

@@ -354,7 +354,12 @@ fun BottomBar(navController: NavController, Type:String) {
                 }
             }
             Column(verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally)  {
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate(Screen.TransactionsList.route)
+                    }
+                )  {
                 if(Type=="transaction"){
                     Icon(painter = painterResource(id = R.drawable.history_1ic), contentDescription = "Transaction",tint = P300)
                     Text(text = "Transaction",color = P300)

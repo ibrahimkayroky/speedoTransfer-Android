@@ -90,8 +90,8 @@ fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) 
         )
 
         CustomTextField(
-            header = "Email",
-            placeHolder = "Enter Your Email",
+            header = "Confirm Password",
+            placeHolder = "Enter Your Password",
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
             inputType = KeyboardType.Password,
             textState = confirmPasswordState,

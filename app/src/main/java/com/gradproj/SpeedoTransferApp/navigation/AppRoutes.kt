@@ -178,7 +178,7 @@ fun Navigation(
             }
 
             composable(
-                route = Screen.TranscationsList.route
+                route = Screen.TransactionsList.route
             ) {
                 AppWithInactivityTimeout(navController = navController) {
                     TransactionsList(navController)
