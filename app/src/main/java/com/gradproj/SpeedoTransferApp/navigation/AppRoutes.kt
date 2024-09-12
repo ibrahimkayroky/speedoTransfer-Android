@@ -186,13 +186,13 @@ fun Navigation(
                 route = Screen.ChangePassword.route
             ) {
 
-                ChangePassword(navController)
+                ChangePassword(navController,UserviewModel,authViewModel)
             }
 
             composable(
                 route = Screen.EditProfile.route
             ) {
-                EditProfile(navController)
+                EditProfile(navController,UserviewModel)
             }
 
             composable(

@@ -5,6 +5,8 @@ import com.gradproj.SpeedoTransferApp.models.LoginRequest
 import com.gradproj.SpeedoTransferApp.models.LoginResponse
 import com.gradproj.SpeedoTransferApp.models.RegisterRequest
 import com.gradproj.SpeedoTransferApp.models.RegisterResponce
+import com.gradproj.SpeedoTransferApp.models.UpdatePassRequest
+import com.gradproj.SpeedoTransferApp.models.UpdateProfileRequest
 import com.gradproj.SpeedoTransferApp.models.UserDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -13,6 +15,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface UserApiCallable {
 
@@ -29,5 +32,15 @@ interface UserApiCallable {
     suspend fun register(
         @Body registerRequest: RegisterRequest
     ): Response<RegisterResponce>
+    @PUT(Constants.UPDATE_USER_PASS)
+    suspend fun updatePassword(
+        @Header("Authorization") token: String,
+        @Body updatePassRequest: UpdatePassRequest
+    )
+    @POST(Constants.UPDATE_USER_PROFILE)
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Body updateProfileRequest: UpdateProfileRequest
+    )
 
 }

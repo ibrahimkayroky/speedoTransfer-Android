@@ -38,6 +38,31 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
             }
         }
     }
+    fun updateUserPass(oldPass:String,newPass:String){
+        viewModelScope.launch {
+            try{
+            val response = repository.updatePass(oldPass,newPass)
+
+                Log.d("trace","response not succeful")
+            } catch (e: Exception) {
+                // Handle network errors
+                Log.d("trace","error: ${e.message}")
+            }
+        }
+    }
+    fun updateProfile(country:String,email:String,name:String){
+        viewModelScope.launch {
+            try{
+                val response = repository.updateProfile(country,email,name)
+
+                Log.d("trace","response not succeful")
+            } catch (e: Exception) {
+                // Handle network errors
+                Log.d("trace","error: ${e.message}")
+            }
+        }
+    }
+
 }
 
 class UserViewModelFactory(
