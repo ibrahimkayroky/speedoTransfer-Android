@@ -355,11 +355,9 @@ fun BottomBar(navController: NavController, Type:String) {
             }
             Column(verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .clickable {
-                        navController.navigate(Screen.TransactionsList.route)
-                    }
-                )  {
+                modifier = Modifier.clickable {
+                    navController.navigate(Screen.TransactionsList.route)
+                }){
                 if(Type=="transaction"){
                     Icon(painter = painterResource(id = R.drawable.history_1ic), contentDescription = "Transaction",tint = P300)
                     Text(text = "Transaction",color = P300)
@@ -693,20 +691,20 @@ fun FavouritesComponent(
 }
 
 @Composable
-fun TransactionComponent(modifier: Modifier = Modifier) {
-    val name = "Ahmed Mohamed"
+fun TransactionComponent(modifier: Modifier = Modifier, amount: String, receiverName: String) {
+    val name = receiverName
     val cardType = "Visa"
     val cardCompany = "MasterCard"
     val cardNumber = "1234"
     val transcationDate = "12/12/2023"
-    val transcationAmount = "1000"
+    val transcationAmount = amount
     val transcationSuccessful = true
 
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(P50),
         modifier = Modifier
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
         Row(
             modifier = Modifier
@@ -823,11 +821,11 @@ fun TransferCardDetails(name:String,accNumber:Int,transferType:String,modifier: 
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun ProfilePreview() {
-    TransactionComponent()
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun ProfilePreview() {
+//    TransactionComponent()
+//}
 
 
 
