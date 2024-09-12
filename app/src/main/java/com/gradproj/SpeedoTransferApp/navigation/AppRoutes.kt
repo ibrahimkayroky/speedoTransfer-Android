@@ -162,11 +162,11 @@ fun Navigation(
                 val name = backStackEntry.arguments?.getString("name") ?: ""
                 val email = backStackEntry.arguments?.getString("email") ?: ""
 
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel=authViewModel) {
                     TransferConfirmation(
                         navController,
                         viewModel = UserviewModel,
-                        authViewModel,
+
                         amount = amount,
                         name = name,
                         email = email

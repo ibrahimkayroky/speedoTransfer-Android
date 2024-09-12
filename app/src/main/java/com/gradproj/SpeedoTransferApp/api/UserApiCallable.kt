@@ -6,10 +6,12 @@ import com.gradproj.SpeedoTransferApp.models.LoginRequest
 import com.gradproj.SpeedoTransferApp.models.LoginResponse
 import com.gradproj.SpeedoTransferApp.models.RegisterRequest
 import com.gradproj.SpeedoTransferApp.models.RegisterResponce
+import com.gradproj.SpeedoTransferApp.models.TransactionResponse
 import com.gradproj.SpeedoTransferApp.models.UpdatePassRequest
 import com.gradproj.SpeedoTransferApp.models.UpdateProfileRequest
 
 import com.gradproj.SpeedoTransferApp.models.TransferRequest
+import com.gradproj.SpeedoTransferApp.models.TransferResponse
 
 import com.gradproj.SpeedoTransferApp.models.UserDataResponse
 import retrofit2.Response
