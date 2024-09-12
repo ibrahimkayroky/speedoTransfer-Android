@@ -32,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,10 +42,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
 import com.gradproj.SpeedoTransferApp.navigation.Screen
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
@@ -52,6 +58,8 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
 import kotlinx.coroutines.launch
 
 @Composable

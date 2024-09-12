@@ -43,9 +43,13 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P50
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun TransferConfirmation(navController: NavController, modifier: Modifier = Modifier) {
+fun TransferConfirmation(navController: NavController, viewModel: UserViewModel, amount: String?, name: String?, email: String?, modifier: Modifier = Modifier) {
+
+
+
     Scaffold(topBar = {
         TransferTopBar(navController)
 
@@ -64,9 +68,7 @@ fun TransferConfirmation(navController: NavController, modifier: Modifier = Modi
                 .padding(16.dp)
                 .fillMaxSize()) {
 
-
             Spacer(modifier = Modifier.height(32.dp))
-
 
             Text(
                 text = "$amount EGP",
@@ -117,11 +119,11 @@ fun TransferConfirmation(navController: NavController, modifier: Modifier = Modi
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun TransferConfirmationPreview() {
-    TransferConfirmation(rememberNavController())
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun TransferConfirmationPreview() {
+//    TransferConfirmation(rememberNavController())
+//}
 @Composable
 fun TransferTopBar(navController: NavController,modifier: Modifier = Modifier) {
     Column(

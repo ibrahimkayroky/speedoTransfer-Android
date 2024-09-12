@@ -1,6 +1,7 @@
 package com.gradproj.SpeedoTransferApp.ui.features.mainApp
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,11 +55,13 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 
 @Composable
-fun HomeScreen(navController: NavController,viewModel: UserViewModel, modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController, viewModel: UserViewModel, TransViewModel: TransViewModel, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
@@ -67,8 +70,8 @@ fun HomeScreen(navController: NavController,viewModel: UserViewModel, modifier: 
 
     // Collect user data from the ViewModel
     val userData by viewModel.userData.collectAsState()
-
-
+    val transactions by TransViewModel.transactions.collectAsState()
+  //  Log.d("tracing", "${transactions}")
     GradientBackground2 {
 
         Scaffold(
