@@ -1,6 +1,7 @@
 package com.gradproj.SpeedoTransferApp.ui.features.profile
 
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,11 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,20 +31,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.navigation.Screen
 
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.isPasswordStrong
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) {
-    val userCountry = "Egypt"
+fun ChangePassword(navController: NavController, userviewModel: UserViewModel, authViewModel: AuthViewModel, modifier: Modifier = Modifier) {
 
-    val passwordState = remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+
+
+    val oldPasswordState = remember { mutableStateOf("") }
     val confirmPasswordState = remember { mutableStateOf("") }
 
-    val isErrorInPassword = remember { mutableStateOf(false) }
-    val isErrorInConfirmPassword = remember { mutableStateOf(false) }
+    // val isErrorInPassword = remember { mutableStateOf(false) }
+    //val isErrorInConfirmPassword = remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -77,12 +88,12 @@ fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) 
             placeHolder = "Enter Your Password",
             icon = ImageVector.vectorResource(id = R.drawable.useric),
             inputType = KeyboardType.Password,
-            textState = passwordState,
-            errorState = isErrorInPassword,
+            textState = oldPasswordState,
+
             errorMessage = "Enter a stronger password",
             onValueChange = {
-                passwordState.value = it
-                isErrorInPassword.value = !isPasswordStrong(it)
+                oldPasswordState.value = it
+
             },
             modifier = Modifier
                 .padding(bottom = 8.dp)
@@ -90,16 +101,15 @@ fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) 
         )
 
         CustomTextField(
-            header = "Confirm Password",
-            placeHolder = "Enter Your Password",
+            header = "New Password",
+            placeHolder = "Enter your password",
             icon = ImageVector.vectorResource(id = R.drawable.emailic),
             inputType = KeyboardType.Password,
             textState = confirmPasswordState,
-            errorState = isErrorInConfirmPassword,
-            errorMessage = "Passwords don't match",
+
             onValueChange = {
                 confirmPasswordState.value = it
-                isErrorInConfirmPassword.value = !confirmPasswordState.value.equals(passwordState.value)
+
             },
             modifier = Modifier
                 .padding(bottom = 8.dp)
@@ -109,8 +119,16 @@ fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) 
         CustomButton(
             text = "Save",
             onClick = {
-                if(isPasswordStrong(passwordState.value) && (passwordState.value.equals(confirmPasswordState.value))) {
-                    //handle backend change
+                if(!isPasswordStrong(confirmPasswordState.value) ) {
+                    //text appears that password is not strong
+
+                }
+                else
+                {
+                    userviewModel.updateUserPass(oldPasswordState.value,confirmPasswordState.value)
+                    Toast.makeText(context, "Password changed successfully", Toast.LENGTH_SHORT).show()
+                    authViewModel.logout()
+                    navController.navigate(Screen.Signin.route)
                 }
             },
             buttonType = "Filled",
@@ -120,9 +138,10 @@ fun ChangePassword(navController: NavController, modifier: Modifier = Modifier) 
         )
     }
 }
+/*
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ChangePasswordPreview() {
     ChangePassword(navController = rememberNavController())
-}
+}*/

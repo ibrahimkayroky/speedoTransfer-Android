@@ -21,5 +21,5 @@ sealed class Screen(val route: String) {
     object OnBoardingConfirmation : Screen("OnBoardingConfirmation")
     object OnBoardingPayment : Screen("OnBoardingPayment")
     object FirstScreen: Screen("FirstScreen")
-
+    object TimeOut: Screen("TimeOut")
 }
