@@ -61,7 +61,9 @@ import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 fun HomeScreen(navController: NavController,viewModel: UserViewModel, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-
+    LaunchedEffect(Unit) {
+        viewModel.getUserData()
+    }
 
     // Collect user data from the ViewModel
     val userData by viewModel.userData.collectAsState()

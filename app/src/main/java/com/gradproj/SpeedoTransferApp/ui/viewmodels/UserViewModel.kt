@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,8 +26,10 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                 if (response.isSuccessful) {
                     // Update StateFlow with user data
                     _userData.value = response.body()
+                    Log.d("trace","${_userData.value?.name} response succeful")
                 } else {
                     // Handle error (you can update another state or show a message)
+                    Log.d("trace","${_userData.value} response not succeful")
                     _userData.value = null
                 }
             } catch (e: Exception) {

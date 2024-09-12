@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.ui.features.authentication
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,19 +44,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
+fun TimeOut(navController: NavController, viewModel: AuthViewModel, modifier: Modifier = Modifier) {
 
-        val nameState = remember { mutableStateOf("") }
-        val passwordState = remember { mutableStateOf("") }
+    val emailState = remember { mutableStateOf("") }
+    val passwordState = remember { mutableStateOf("") }
+    val loginState by viewModel.loginState.collectAsState()
 
         val scope = rememberCoroutineScope()
         val snackbarHostState = remember { SnackbarHostState() }
@@ -134,7 +140,7 @@ fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
                     placeHolder = "Enter your email address",
                     icon = ImageVector.vectorResource(id = R.drawable.emailic),
                     inputType = KeyboardType.Text,
-                    textState = nameState,
+                    textState = emailState,
                     modifier = Modifier
                         .padding(bottom = 8.dp)
                         .fillMaxWidth()
@@ -155,13 +161,25 @@ fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
 
                 CustomButton(
                     text = "Sign in",
-                    onClick = {},
+                    onClick = {  Log.d("trace", "Button clicked:${emailState.value},${passwordState.value}")
+                        viewModel.login(emailState.value, passwordState.value)
+                    },
                     buttonType = "Filled",
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .height(55.dp)
+                    ,
                 )
-
+                when (loginState) {
+                    true -> {
+                        Text("Login successful")
+                        LaunchedEffect(Unit) {
+                            navController.navigate(Screen.Home.route)
+                        }
+                    }
+                    false -> Text("Login failed")
+                    null -> Text("Please enter your credentials")
+                }
 
             }
             // Screen content
@@ -170,9 +188,10 @@ fun TimeOut(navController: NavController, modifier: Modifier = Modifier) {
 }
 
 
+/*
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SignInpreview() {
     TimeOut(rememberNavController())
-}
+}*/

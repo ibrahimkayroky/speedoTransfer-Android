@@ -93,6 +93,12 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    // Jackson Kotlin module
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
+
+    // Jackson Java 8 Date/Time module
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0")
+
 
 
 

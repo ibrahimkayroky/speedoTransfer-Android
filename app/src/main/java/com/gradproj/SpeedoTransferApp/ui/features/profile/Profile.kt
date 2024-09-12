@@ -29,10 +29,11 @@ import com.gradproj.SpeedoTransferApp.navigation.Screen
 import com.gradproj.SpeedoTransferApp.ui.components.ProfileComponent
 import com.gradproj.SpeedoTransferApp.ui.theme.G100
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun Profile(navController: NavController, modifier: Modifier = Modifier) {
-    val username = "Asmaa Desouky"
+fun Profile(navController: NavController, viewModel: UserViewModel,modifier: Modifier = Modifier) {
+    val username = viewModel.userData.value?.name ?: ""
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.padding(16.dp)
@@ -132,9 +133,11 @@ fun extractFirstLetters(input: String): String {
         .map { it.first().uppercaseChar() }
         .joinToString("")
 }
+/*
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfilePreview() {
     Profile(navController = rememberNavController())
 }
+*/

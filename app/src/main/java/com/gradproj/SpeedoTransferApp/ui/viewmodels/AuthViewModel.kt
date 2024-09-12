@@ -2,23 +2,22 @@ package com.gradproj.SpeedoTransferApp.ui.viewmodels
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import androidx.lifecycle.viewModelScope
-import com.gradproj.SpeedoTransferApp.api.RetrofitClient
 import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.compose.ui.platform.LocalContext
 import com.gradproj.SpeedoTransferApp.repository.UserRepository
+import java.time.LocalDate
 
+sealed class RegistrationState {
+    object Loading : RegistrationState()
+    object Success : RegistrationState()
+    data class Error(val message: String) : RegistrationState()
+}
 class AuthViewModel(private val context: Context,private val userRepository: UserRepository): ViewModel() {
     private val sharedPreferencesManager: SharedPreferencesManager by lazy {
         SharedPreferencesManager(context)
@@ -26,14 +25,17 @@ class AuthViewModel(private val context: Context,private val userRepository: Use
 
     private val _loginState = MutableStateFlow<Boolean?>(null)
     val loginState: StateFlow<Boolean?> get() = _loginState
+    private val _registerState = MutableStateFlow<RegistrationState?>(null)
+    val registerState: StateFlow<RegistrationState?> = _registerState
 
     // Method to handle user login
     fun login(email: String, password: String) {
         viewModelScope.launch {
             try {
+                userRepository.clearToken()
                 // Call your API to perform login (replace this with actual login API)
                 val response = userRepository.login(email, password)
-
+                Log.d("trace", "Token: ${response}")
                 if (response.isSuccessful && response.body() != null) {
                     // Assume token comes in response body
                     val token = response.body()?.token
@@ -41,7 +43,7 @@ class AuthViewModel(private val context: Context,private val userRepository: Use
 
                     // Save token in SharedPreferences
                     if (token != null) {
-                        sharedPreferencesManager.saveToken(token)
+                        userRepository.saveToken(token)
                     }
 
                     // Update login state
@@ -55,10 +57,47 @@ class AuthViewModel(private val context: Context,private val userRepository: Use
         }
     }
 
+fun register(
+
+             email: String,
+             name: String,
+             country: String,
+             password: String,){
+    viewModelScope.launch {
+        _registerState.value = RegistrationState.Loading
+        try {
+            userRepository.clearToken()
+            // Call your API to perform login (replace this with actual login API)
+            val response = userRepository.register(email,name,country, password)
+            Log.d("trace", "Token: ${response}")
+            if (response.isSuccessful && response.body() != null) {
+                // Assume token comes in response body
+                val token = response.body()?.token
+                Log.d("trace", "Token: $token")
+
+                // Save token in SharedPreferences
+                if (token != null) {
+                    userRepository.saveToken(token)
+                }
+
+                // Update login state
+                _registerState.value = RegistrationState.Success
+            } else {
+                _registerState.value = RegistrationState.Error("Registration failed: ${response.message()}")
+            }
+        } catch (e: Exception) {
+            _registerState.value = RegistrationState.Error("An error occurred: ${e.localizedMessage}")
+        }
+    }
+
+}
     // Method to handle user logout
     fun logout() {
         // Clear token from SharedPreferences
-        sharedPreferencesManager.clearToken()
+
+        _loginState.value=false
+        Log.d("trace", "logout done ${loginState}")
+        userRepository.clearToken()
     }
 }
 class AuthViewModelFactory(

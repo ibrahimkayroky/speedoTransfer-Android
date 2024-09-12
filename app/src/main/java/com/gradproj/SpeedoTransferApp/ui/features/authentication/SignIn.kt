@@ -43,24 +43,16 @@ import com.gradproj.SpeedoTransferApp.api.RetrofitClient
 import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
 import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun SignIn(navController: NavController, viewModel: AuthViewModel, modifier: Modifier = Modifier) {
 
-    // Create UserRepository instance
-    val userRepository = UserRepository(
-        apiService = RetrofitClient.api, // Adjust according to how you instantiate your API service
-        sharedPreferencesManager = SharedPreferencesManager(context)
-    )
 
-    // Create the ViewModel using the factory
-    val authViewModel: AuthViewModel = viewModel(
-        factory = AuthViewModelFactory(userRepository, context)
-    )
+
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
-    val loginState by authViewModel.loginState.collectAsState()
+    val loginState by viewModel.loginState.collectAsState()
     GradientBackground {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -112,7 +104,7 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
                 text = "Sign in",
                 onClick = {
                     Log.d("trace", "Button clicked:${emailState.value},${passwordState.value}")
-                    authViewModel.login(emailState.value, passwordState.value)
+                    viewModel.login(emailState.value, passwordState.value)
 
                           },
                 buttonType = "Filled",
@@ -150,8 +142,9 @@ fun SignIn(navController: NavController, modifier: Modifier = Modifier) {
 }
 
 
+/*
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun SignInpreview() {
     SignIn(navController = rememberNavController())
-}
+}*/

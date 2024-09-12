@@ -3,6 +3,8 @@ package com.gradproj.SpeedoTransferApp.api
 import com.gradproj.SpeedoTransferApp.constants.Constants
 import com.gradproj.SpeedoTransferApp.models.LoginRequest
 import com.gradproj.SpeedoTransferApp.models.LoginResponse
+import com.gradproj.SpeedoTransferApp.models.RegisterRequest
+import com.gradproj.SpeedoTransferApp.models.RegisterResponce
 import com.gradproj.SpeedoTransferApp.models.UserDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,6 +25,9 @@ interface UserApiCallable {
     @GET(Constants.GET_USER)
     suspend fun getUserData(  @Header("Authorization") token: String): Response<UserDataResponse>
 
-
+    @POST(Constants.REGISTER_USER)
+    suspend fun register(
+        @Body registerRequest: RegisterRequest
+    ): Response<RegisterResponce>
 
 }
