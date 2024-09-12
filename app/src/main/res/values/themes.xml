@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.SpeedoTransferAppS" parent="Theme.SplashScreen">
+        <!-- Other theme settings -->
+        <item name="windowSplashScreenBackground">@color/P500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/speedo_transfer_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.SpeedoTransferApp</item>
+
+    </style>
+
     <style name="Theme.SpeedoTransferApp" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
