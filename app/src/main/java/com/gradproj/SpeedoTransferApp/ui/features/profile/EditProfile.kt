@@ -29,9 +29,10 @@ import com.gradproj.SpeedoTransferApp.R
 
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
 import com.gradproj.SpeedoTransferApp.ui.components.CustomTextField
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun EditProfile(navController: NavController, modifier: Modifier = Modifier) {
+fun EditProfile(navController: NavController, viewModel: UserViewModel, modifier: Modifier = Modifier) {
     val userCountry = "Egypt"
 
     val fullNameState = remember { mutableStateOf("") }
@@ -133,7 +134,8 @@ fun EditProfile(navController: NavController, modifier: Modifier = Modifier) {
             text = "Save",
             onClick = {
                 if(isInputNotEmpty(fullNameState.value) && isEmailValid(emailState.value)) {
-                    //handle backend change
+                    viewModel.updateProfile(countryState.value,emailState.value,fullNameState.value)
+                    navController.popBackStack()
                 }
             },
             buttonType = "Filled",
@@ -150,10 +152,4 @@ fun isInputNotEmpty(input: String): Boolean {
 
 fun isEmailValid(email: String): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun editProfilePreview() {
-    EditProfile(navController = rememberNavController())
 }

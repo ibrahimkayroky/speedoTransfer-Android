@@ -49,10 +49,12 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P50
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoreMenu(navController: NavController, modifier: Modifier = Modifier) {
+fun MoreMenu(navController: NavController, viewModel: AuthViewModel, modifier: Modifier = Modifier) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
@@ -220,6 +222,7 @@ fun MoreMenu(navController: NavController, modifier: Modifier = Modifier) {
             icon = ImageVector.vectorResource(id = R.drawable.logoutic),
             modifier = Modifier
                 .clickable {
+                   viewModel.logout()
                     navController.navigate(Screen.Signin.route)
                 }
         )
@@ -227,9 +230,10 @@ fun MoreMenu(navController: NavController, modifier: Modifier = Modifier) {
     }
 
 }
+/*
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun MoreMenuPreview() {
     MoreMenu(navController = rememberNavController())
-}
+}*/

@@ -1,6 +1,7 @@
 package com.gradproj.SpeedoTransferApp.ui.features.mainApp
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,38 +25,66 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.models.TransactionResponse
+import com.gradproj.SpeedoTransferApp.models.UserDataResponse
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
+import com.gradproj.SpeedoTransferApp.ui.components.TransactionComponent
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G200
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 
 @Composable
-fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavController, viewModel: UserViewModel, TransViewModel: TransViewModel, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.getUserData()
+    }
+
+    // Collect user data from the ViewModel
+    val userData by viewModel.userData.collectAsState()
+    val transactions by TransViewModel.transactions.collectAsState()
+    Log.d("tracing", "${transactions}")
     GradientBackground2 {
+
         Scaffold(
             bottomBar = { BottomBar(navController,"home") },
             topBar={
-                HomeTopBar()
+                HomeTopBar(userData)
             }
         ) { paddingValues ->
-            val balance=10000
+            val balance=userData?.balance
             Column( modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues) ) {
@@ -81,29 +112,54 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                        Text(text="Recent transactions",color=G900)
                     Text(text = "View all", color = G200)
                 }
-                //lazy colmn will be added here later
+                TransactionList(transactions)
             }
-
         }
     }
 }
+
+@Composable
+fun TransactionList(transactions: TransactionResponse?) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        if(transactions != null) {
+            items(transactions) { transaction ->
+                val amount = transaction.amount
+                val receiverName = transaction.receiverName
+
+                TransactionListItem(
+                    amount = amount,
+                    name = receiverName,
+                    Day = "today",
+                    Time = "11:00",
+                    state = "received",
+                    cardNumber = 5324
+                )
+            }
+        }
+    }
+}
+
+/*
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
     //TransactionListItem("karen Samuel",12345678,500,"today","11:00","recieved")
-    HomeScreen(rememberNavController())
+    HomeScreen(rememberNavController(),viewModel = viewModel(factory = UserViewModelFactory())
 }
+*/
 
 @Composable
-fun HomeTopBar(modifier: Modifier = Modifier) {
+fun HomeTopBar(userData: UserDataResponse?, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth()
     ) {
         // Api will change it 
-        val name = "karen"
+        val name = userData?.name ?: "User"
         val pic = R.drawable.error_ic
         Row(
             horizontalArrangement = Arrangement.SpaceBetween, // Distributes space between elements
@@ -173,7 +229,7 @@ fun TransactionListItem(name :String ,cardNumber:Int,amount:Int,Day:String,Time:
         Spacer(modifier = Modifier.width(8.dp))
         Column(modifier = Modifier) {
             Text(text = name, color = G900)
-            Text(text = "ViVisa . Mater Card . $cardNumber", color = G700)
+            Text(text = "Visa . Mater Card . $cardNumber", color = G700)
             Text(text = "$Day $Time - $state", color = G700)
 
         }

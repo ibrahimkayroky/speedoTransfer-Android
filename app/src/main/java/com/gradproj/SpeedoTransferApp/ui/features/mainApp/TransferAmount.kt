@@ -19,20 +19,31 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
 import com.gradproj.SpeedoTransferApp.navigation.Screen
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.TransferRepository
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.CustomButton
@@ -42,9 +53,28 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G70
 import com.gradproj.SpeedoTransferApp.ui.theme.G700
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModelFactory
 
 @Composable
 fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+    val nameState = remember { mutableStateOf("") }
+    val emailState = remember { mutableStateOf("") }
+    val amountState = remember { mutableStateOf("1000") }
+
+    val transferRepository = TransferRepository(
+        apiService = RetrofitClient.api, // Adjust according to how you instantiate your API service
+        sharedPreferencesManager = SharedPreferencesManager(context)
+    )
+    val transferViewModel: TransferViewModel = viewModel(
+        factory = TransferViewModelFactory(transferRepository)
+    )
+    val transferState by transferViewModel.transferData.collectAsState()
+
     GradientBackground2 {
         Scaffold(topBar = {
             AmountTopBar(navController)
@@ -78,10 +108,11 @@ fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) 
                             .align(Alignment.Start)
                     )
                     OutlinedTextField(
-                        value = amount.toString(),
-
-                        onValueChange = {},
-                        modifier = modifier.padding(
+                        value = amountState.value,
+                        onValueChange = { amountState.value = it },
+                        label = { Text(text = "Enter Recipient Name",color = G70) },
+                        placeholder = { Text(text = "Enter Recipient Name",color = G70) },
+                        modifier = Modifier.padding(
                             start = 8.dp,
                             end = 8.dp,
                             top = 16.dp,
@@ -137,8 +168,8 @@ fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) 
                 )
                 // Recipient Name
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
+                    value = nameState.value,
+                    onValueChange = {nameState.value = it},
                     label = { Text(text = "Enter Recipient Name",color = G70) },
                     placeholder = { Text(text = "Enter Recipient Name",color = G70) },
                     modifier = Modifier
@@ -154,15 +185,19 @@ fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) 
                 )
                 // Recipient Account
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text(text = "Enter Recipient Account Number",color = G70) },
-                    placeholder = { Text(text = "Enter Recipient Account Number",color = G70) },
+                    value = emailState.value,
+                    onValueChange = {emailState.value=it},
+                    label = { Text(text = "Enter Recipient Account",color = G70) },
+                    placeholder = { Text(text = "Enter Recipient Account",color = G70) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp).background(G0)
                 )
-                CustomButton("Continue", { navController.navigate(Screen.TransferConfirmation.route) }, "Filled",)
+                CustomButton("Continue", {
+
+                    navController.navigate(Screen.TransferConfirmation.route + "/${amountState.value}" + "/${nameState.value}" + "/${emailState.value}")
+
+                    }, "Filled",)
 
             }
         }

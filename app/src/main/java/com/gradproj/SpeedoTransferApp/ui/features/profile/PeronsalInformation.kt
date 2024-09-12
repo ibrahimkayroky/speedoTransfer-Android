@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,13 +23,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.ui.components.ProfileInformationComponent
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun PersonalInformation(navController: NavController, modifier: Modifier = Modifier) {
-    val fullName = "Asmaa Desouky"
-    val email = "Asmaa@gmail.com"
-    val DOB = "12/01/2000"
-    val country = "Egypt"
+fun PersonalInformation(navController: NavController,viewModel: UserViewModel, modifier: Modifier = Modifier) {
+    val userData by viewModel.userData.collectAsState()
+    val fullName = userData?.name
+    val email = userData?.email
+    val DOB = userData?.birthDate
+    val country = userData?.country
     val bankAccount = "1234xxxx"
 
     Column(
@@ -55,22 +59,30 @@ fun PersonalInformation(navController: NavController, modifier: Modifier = Modif
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-        ProfileInformationComponent(
-            header = "Full Name",
-            description = fullName
-        )
-        ProfileInformationComponent(
-            header = "Email",
-            description = email
-        )
-        ProfileInformationComponent(
-            header = "Date Of Birth",
-            description = DOB
-        )
-        ProfileInformationComponent(
-            header = "Country",
-            description = country
-        )
+        if (fullName != null) {
+            ProfileInformationComponent(
+                header = "Full Name",
+                description = fullName
+            )
+        }
+        if (email != null) {
+            ProfileInformationComponent(
+                header = "Email",
+                description = email
+            )
+        }
+        if (DOB != null) {
+            ProfileInformationComponent(
+                header = "Date Of Birth",
+                description = DOB
+            )
+        }
+        if (country != null) {
+            ProfileInformationComponent(
+                header = "Country",
+                description = country
+            )
+        }
         ProfileInformationComponent(
             header = "Bank Account",
             description = bankAccount
@@ -78,9 +90,10 @@ fun PersonalInformation(navController: NavController, modifier: Modifier = Modif
     }
 
 }
+/*
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun PersonalInformationPreview() {
-    PersonalInformation(navController = rememberNavController())
-}
+    PersonalInformation(navController = rememberNavController(),)
+}*/

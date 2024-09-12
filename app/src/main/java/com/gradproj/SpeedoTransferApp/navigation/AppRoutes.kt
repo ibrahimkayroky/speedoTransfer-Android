@@ -15,12 +15,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.api.UserApiCallable
+import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
+import com.gradproj.SpeedoTransferApp.repository.FavoriteRepository
+import com.gradproj.SpeedoTransferApp.repository.TransactionRepository
+import com.gradproj.SpeedoTransferApp.repository.TransferRepository
+import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignupContinue
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.TimeOut
@@ -40,6 +49,16 @@ import com.gradproj.SpeedoTransferApp.ui.features.profile.EditProfile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.PersonalInformation
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Profile
 import com.gradproj.SpeedoTransferApp.ui.features.profile.Settings
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.AuthViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -51,6 +70,43 @@ fun Navigation(
     isFirstTime: Boolean,
     modifier: Modifier = Modifier
 ) {
+
+    val userRepository = UserRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val UserviewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(userRepository)
+    )
+
+    val transactionRepository = TransactionRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val TransViewModel: TransViewModel = viewModel(
+        factory = TransViewModelFactory(transactionRepository)
+    )
+
+    val transferRepository = TransferRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val TransferViewModel: TransferViewModel = viewModel(
+        factory = TransferViewModelFactory(transferRepository)
+    )
+
+//    val FavoriteRepository = FavoriteRepository(
+//        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+//        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+//    )
+//    val FavoriteViewModel: FavoriteViewModel = viewModel(
+//        factory = FavoriteViewModelFactory(FavoriteRepository)
+//    )
+
+    // Create the ViewModel using the factory
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(userRepository,  LocalContext.current)
+    )
     //val navController = rememberNavController()
 
     Column(modifier = modifier) {
@@ -71,7 +127,8 @@ fun Navigation(
 
 
             composable(route = Screen.Signin.route) {
-                SignIn(navController)
+
+                SignIn(navController,authViewModel)
             }
 
             composable(
@@ -93,30 +150,67 @@ fun Navigation(
                     entry.arguments?.getString("name"),
                     entry.arguments?.getString("email"),
                     entry.arguments?.getString("password")
+                    ,authViewModel
                 )
             }
 
             composable(route = Screen.Home.route) {
-                AppWithInactivityTimeout(navController = navController) {
-                    HomeScreen(navController)
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+
+                    HomeScreen(navController, viewModel = UserviewModel, TransViewModel = TransViewModel)
                 }
             }
 
-            composable(route = Screen.TransferConfirmation.route) {
-                AppWithInactivityTimeout(navController = navController) {
-                    TransferConfirmation(navController)
+
+            composable(route = Screen.TransferConfirmation.route + "/{amount}" + "/{name}" + "/{email}",
+                arguments = listOf(
+                    navArgument("amount") {},
+                    navArgument("name") {},
+                    navArgument("email") {})
+            ) {
+                backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount") ?: ""
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                val email = backStackEntry.arguments?.getString("email") ?: ""
+
+                AppWithInactivityTimeout(navController = navController, viewModel=authViewModel) {
+                    TransferConfirmation(
+                        navController,
+                        viewModel = UserviewModel,
+                        transferViewModel = TransferViewModel,
+                        amount = amount,
+                        name = name,
+                        email = email
+                    )
+
                 }
             }
             composable(route = Screen.TransferAmount.route) {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     TransferAmount(navController)
 
                 }
             }
-            composable(route = Screen.TransferPayment.route) {
-                AppWithInactivityTimeout(navController = navController) {
 
-                    TransferPayment(navController)
+            composable(route = Screen.TransferPayment.route + "/{amount}" + "/{name}" + "/{email}",
+                arguments = listOf(
+                    navArgument("amount") {},
+                    navArgument("name") {},
+                    navArgument("email") {})
+            ) {
+                backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount") ?: ""
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                val email = backStackEntry.arguments?.getString("email") ?: ""
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+
+                    TransferPayment(
+                        navController,
+                        viewModel = UserviewModel,
+                        amount = amount,
+                        name = name,
+                        email = email
+                    )
                 }
             }
 
@@ -124,34 +218,33 @@ fun Navigation(
             composable(
                 route = Screen.MoreMenu.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
 
-                    MoreMenu(navController)
+                    MoreMenu(navController,authViewModel)
                 }
             }
 
             composable(
                 route = Screen.Profile.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
-                    Profile(navController)
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+                    Profile(navController,UserviewModel)
 
                 }
             }
 
-
             composable(
                 route = Screen.PersonalInformation.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
-                    PersonalInformation(navController)
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+                    PersonalInformation(navController,UserviewModel)
                 }
             }
 
             composable(
                 route = Screen.Settings.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     Settings(navController)
                 }
             }
@@ -160,19 +253,19 @@ fun Navigation(
                 route = Screen.ChangePassword.route
             ) {
 
-                ChangePassword(navController)
+                ChangePassword(navController,UserviewModel,authViewModel)
             }
 
             composable(
                 route = Screen.EditProfile.route
             ) {
-                EditProfile(navController)
+                EditProfile(navController,UserviewModel)
             }
 
             composable(
                 route = Screen.FavoritesMenu.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     Favourites(navController)
                 }
             }
@@ -180,8 +273,8 @@ fun Navigation(
             composable(
                 route = Screen.TransactionsList.route
             ) {
-                AppWithInactivityTimeout(navController = navController) {
-                    TransactionsList(navController)
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+                    TransactionsList(navController,TransViewModel = TransViewModel)
                 }
             }
 
@@ -192,26 +285,26 @@ fun Navigation(
 
             composable(route = Screen.OnBoardingAmount.route)
             {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     OnBoardingAmount(navController)
                 }
             }
 
             composable(route = Screen.OnBoardingConfirmation.route)
             {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     OnBoardingConfirmation(navController)
                 }
             }
             composable(route = Screen.OnBoardingPayment.route)
             {
-                AppWithInactivityTimeout(navController = navController) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
                     OnBoardingPayment(navController)
                 }
             }
-            composable(route = "timeoutScreen") {
-                AppWithInactivityTimeout(navController = navController) {
-                    TimeOut(navController)
+            composable(route = Screen.TimeOut.route) {
+                AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
+                    TimeOut(navController,authViewModel)
                 }
             }
         }
@@ -223,6 +316,7 @@ fun Navigation(
 fun AppWithInactivityTimeout(
     navController: NavController,
     timeoutDuration: Long =  120000L// 5 seconds for example
+    ,viewModel: AuthViewModel
     , content: @Composable () -> Unit
 ) {
     // Coroutine scope to handle timers
@@ -234,7 +328,9 @@ fun AppWithInactivityTimeout(
         val job = scope.launch {
             while (isActive) {
                 if (System.currentTimeMillis() - lastInteractionTime > timeoutDuration) {
-                    navController.navigate("timeoutScreen") {
+
+                    navController.navigate(Screen.TimeOut.route) {
+                        viewModel.logout()
                         popUpTo("mainScreen") { inclusive = true }
                     }
                     break
