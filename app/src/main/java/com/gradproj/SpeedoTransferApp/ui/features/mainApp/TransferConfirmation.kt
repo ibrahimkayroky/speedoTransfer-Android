@@ -1,5 +1,6 @@
 package com.gradproj.SpeedoTransferApp.ui.features.mainApp
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,23 +47,26 @@ import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
 import com.gradproj.SpeedoTransferApp.ui.theme.P50
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 
 @Composable
-fun TransferConfirmation(navController: NavController, viewModel: UserViewModel, amount: String?, name: String?, email: String?, modifier: Modifier = Modifier) {
+fun TransferConfirmation(navController: NavController, viewModel: UserViewModel, transferViewModel: TransferViewModel, amount: String, name: String, email: String, modifier: Modifier = Modifier) {
 
 
+    val userData by viewModel.userData.collectAsState()
+    val transferState by transferViewModel.transferState.collectAsState()
 
     Scaffold(topBar = {
         TransferTopBar(navController)
 
     }, bottomBar = { BottomBar(navController,"transfer") }){
         innerPadding ->
-        var senderName :String = "Asmaa Dosuky"
-        var senderAccNumber :Int = 6789
-        var recipientName :String = "Jonath Smith"
-        var recipientAccNumber :Int = 1234
-        var amount :Int = 1000
+        var senderName :String = "${userData?.name}"
+        var senderAccNumber :Int = 3214
+        var recipientName :String = name
+        var recipientAccNumber :Int = 5327
+        var amount :String = amount
 
         Column( verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,7 +118,20 @@ fun TransferConfirmation(navController: NavController, viewModel: UserViewModel,
             )
             transferDetails(senderName,senderAccNumber,recipientName,recipientAccNumber)
 
-            CustomButton("Confirm", {navController.navigate(Screen.TransferPayment.route)}, "Filled")
+            CustomButton("Confirm", {
+                Log.d("trre", recipientName + email)
+                transferViewModel.transfer(recipientName, email, amount.toDouble())
+              }, "Filled"
+            )
+            when (transferState) {
+                true -> {
+                    LaunchedEffect(Unit) {
+                        navController.navigate(Screen.TransferPayment.route+ "/$amount" + "/$name" + "/$email")
+                    }
+                }
+                false -> Text("transfer failed, please try again")
+                null -> Text("")
+            }
             Spacer(modifier = Modifier.height(16.dp))
             CustomButton("Previous ", {navController.popBackStack() }, "Outlined")
 

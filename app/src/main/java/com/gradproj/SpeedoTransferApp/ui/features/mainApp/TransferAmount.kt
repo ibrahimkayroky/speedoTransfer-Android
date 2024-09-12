@@ -187,15 +187,15 @@ fun TransferAmount(navController: NavController, modifier: Modifier = Modifier) 
                 OutlinedTextField(
                     value = emailState.value,
                     onValueChange = {emailState.value=it},
-                    label = { Text(text = "Enter Recipient Account Number",color = G70) },
-                    placeholder = { Text(text = "Enter Recipient Account Number",color = G70) },
+                    label = { Text(text = "Enter Recipient Account",color = G70) },
+                    placeholder = { Text(text = "Enter Recipient Account",color = G70) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp).background(G0)
                 )
                 CustomButton("Continue", {
 
-                    navController.navigate(Screen.TransferConfirmation.route + "/${amountState}" + "/${nameState.value}" + "/${emailState.value}")
+                    navController.navigate(Screen.TransferConfirmation.route + "/${amountState.value}" + "/${nameState.value}" + "/${emailState.value}")
 
                     }, "Filled",)
 

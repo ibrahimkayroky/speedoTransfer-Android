@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,11 +44,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.gradproj.SpeedoTransferApp.R
 import com.gradproj.SpeedoTransferApp.api.RetrofitClient
+import com.gradproj.SpeedoTransferApp.models.TransactionResponse
 import com.gradproj.SpeedoTransferApp.models.UserDataResponse
 import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
 import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.components.BottomBar
 import com.gradproj.SpeedoTransferApp.ui.components.GradientBackground2
+import com.gradproj.SpeedoTransferApp.ui.components.TransactionComponent
 import com.gradproj.SpeedoTransferApp.ui.theme.G0
 import com.gradproj.SpeedoTransferApp.ui.theme.G200
 import com.gradproj.SpeedoTransferApp.ui.theme.G40
@@ -71,7 +75,7 @@ fun HomeScreen(navController: NavController, viewModel: UserViewModel, TransView
     // Collect user data from the ViewModel
     val userData by viewModel.userData.collectAsState()
     val transactions by TransViewModel.transactions.collectAsState()
-  //  Log.d("tracing", "${transactions}")
+    Log.d("tracing", "${transactions}")
     GradientBackground2 {
 
         Scaffold(
@@ -108,12 +112,35 @@ fun HomeScreen(navController: NavController, viewModel: UserViewModel, TransView
                        Text(text="Recent transactions",color=G900)
                     Text(text = "View all", color = G200)
                 }
-                //lazy colmn will be added here later
+                TransactionList(transactions)
             }
-
         }
     }
 }
+
+@Composable
+fun TransactionList(transactions: TransactionResponse?) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        if(transactions != null) {
+            items(transactions) { transaction ->
+                val amount = transaction.amount
+                val receiverName = transaction.receiverName
+
+                TransactionListItem(
+                    amount = amount,
+                    name = receiverName,
+                    Day = "today",
+                    Time = "11:00",
+                    state = "received",
+                    cardNumber = 5324
+                )
+            }
+        }
+    }
+}
+
 /*
 
 @Preview(showSystemUi = true, showBackground = true)
@@ -202,7 +229,7 @@ fun TransactionListItem(name :String ,cardNumber:Int,amount:Int,Day:String,Time:
         Spacer(modifier = Modifier.width(8.dp))
         Column(modifier = Modifier) {
             Text(text = name, color = G900)
-            Text(text = "ViVisa . Mater Card . $cardNumber", color = G700)
+            Text(text = "Visa . Mater Card . $cardNumber", color = G700)
             Text(text = "$Day $Time - $state", color = G700)
 
         }

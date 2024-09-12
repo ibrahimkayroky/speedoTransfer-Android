@@ -116,7 +116,7 @@ fun Profile(navController: NavController, viewModel: UserViewModel,modifier: Mod
         )
         ProfileComponent(
             navController,
-            pageToGo = "",
+            pageToGo = Screen.FavoritesMenu.route,
             header = "My Favourite list",
             description = "view your favourites",
             icon = ImageVector.vectorResource(id = R.drawable.favoriteic),

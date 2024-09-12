@@ -28,6 +28,7 @@ import com.gradproj.SpeedoTransferApp.api.UserApiCallable
 import com.gradproj.SpeedoTransferApp.prefrences.SharedPreferencesManager
 import com.gradproj.SpeedoTransferApp.repository.FavoriteRepository
 import com.gradproj.SpeedoTransferApp.repository.TransactionRepository
+import com.gradproj.SpeedoTransferApp.repository.TransferRepository
 import com.gradproj.SpeedoTransferApp.repository.UserRepository
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignUp
 import com.gradproj.SpeedoTransferApp.ui.features.authentication.SignupContinue
@@ -54,6 +55,8 @@ import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.FavoriteViewModelFactory
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransViewModelFactory
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModel
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.TransferViewModelFactory
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
 import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModelFactory
 import kotlinx.coroutines.delay
@@ -82,6 +85,14 @@ fun Navigation(
     )
     val TransViewModel: TransViewModel = viewModel(
         factory = TransViewModelFactory(transactionRepository)
+    )
+
+    val transferRepository = TransferRepository(
+        apiService = RetrofitClient.createService(UserApiCallable::class.java),
+        sharedPreferencesManager = SharedPreferencesManager(LocalContext.current)
+    )
+    val TransferViewModel: TransferViewModel = viewModel(
+        factory = TransferViewModelFactory(transferRepository)
     )
 
 //    val FavoriteRepository = FavoriteRepository(
@@ -150,7 +161,7 @@ fun Navigation(
                 }
             }
 
-            
+
             composable(route = Screen.TransferConfirmation.route + "/{amount}" + "/{name}" + "/{email}",
                 arguments = listOf(
                     navArgument("amount") {},
@@ -166,7 +177,7 @@ fun Navigation(
                     TransferConfirmation(
                         navController,
                         viewModel = UserviewModel,
-
+                        transferViewModel = TransferViewModel,
                         amount = amount,
                         name = name,
                         email = email
@@ -180,10 +191,26 @@ fun Navigation(
 
                 }
             }
-            composable(route = Screen.TransferPayment.route) {
+
+            composable(route = Screen.TransferPayment.route + "/{amount}" + "/{name}" + "/{email}",
+                arguments = listOf(
+                    navArgument("amount") {},
+                    navArgument("name") {},
+                    navArgument("email") {})
+            ) {
+                backStackEntry ->
+                val amount = backStackEntry.arguments?.getString("amount") ?: ""
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                val email = backStackEntry.arguments?.getString("email") ?: ""
                 AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
 
-                    TransferPayment(navController)
+                    TransferPayment(
+                        navController,
+                        viewModel = UserviewModel,
+                        amount = amount,
+                        name = name,
+                        email = email
+                    )
                 }
             }
 
@@ -205,7 +232,6 @@ fun Navigation(
 
                 }
             }
-
 
             composable(
                 route = Screen.PersonalInformation.route
@@ -248,7 +274,7 @@ fun Navigation(
                 route = Screen.TranscationsList.route
             ) {
                 AppWithInactivityTimeout(navController = navController, viewModel = authViewModel) {
-                    TransactionsList(navController)
+                    TransactionsList(navController,TransViewModel = TransViewModel)
                 }
             }
 

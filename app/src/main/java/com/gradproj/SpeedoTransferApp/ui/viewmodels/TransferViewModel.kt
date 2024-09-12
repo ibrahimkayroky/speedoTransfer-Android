@@ -15,21 +15,26 @@ class TransferViewModel(private val Repository: TransferRepository): ViewModel()
 
     private val _transferData = MutableStateFlow<TransferResponse?>(null)
     val transferData: StateFlow<TransferResponse?> get() = _transferData
+    private val _transferState = MutableStateFlow<Boolean?>(null)
+    val transferState: StateFlow<Boolean?> get() = _transferState
 
     fun transfer(receiverName: String, receiverAccount: String, amount: Double){
 
         viewModelScope.launch {
             try {
                 val response = Repository.transfer(amount, receiverAccount, receiverName)
-
+                Log.d("trr", "$response")
                 if(response.isSuccessful){
                     _transferData.value = response.body()
+                    _transferState.value = true
                 } else {
                     _transferData.value = null
+                    _transferState.value = false
                 }
             } catch (e: Exception) {
                 Log.d("exception", e.toString())
                 _transferData.value = null
+                _transferState.value = false
             }
         }
     }

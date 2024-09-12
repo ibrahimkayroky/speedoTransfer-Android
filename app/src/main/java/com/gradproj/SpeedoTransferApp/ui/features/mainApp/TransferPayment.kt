@@ -18,6 +18,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,18 +45,22 @@ import com.gradproj.SpeedoTransferApp.ui.features.notification.sendNotification
 import com.gradproj.SpeedoTransferApp.ui.theme.G500
 import com.gradproj.SpeedoTransferApp.ui.theme.G900
 import com.gradproj.SpeedoTransferApp.ui.theme.P300
+import com.gradproj.SpeedoTransferApp.ui.viewmodels.UserViewModel
+
 @Composable
-fun TransferPayment(navController: NavController, modifier: Modifier = Modifier) {
+fun TransferPayment(navController: NavController, viewModel: UserViewModel, name:String, email:String, amount:String, modifier: Modifier = Modifier) {
+    val userData by viewModel.userData.collectAsState()
+
     Scaffold(topBar = {
         TransferPaymentTopBar(navController)
 
     }, bottomBar = { BottomBar(navController,"transfer") }){
             innerPadding ->
-        var senderName :String = "Asmaa Dosuky"
-        var senderAccNumber :Int = 6789
-        var recipientName :String = "Jonath Smith"
-        var recipientAccNumber :Int = 1234
-        var amount :Int = 1000
+        var senderName :String = "${userData?.name}"
+        var senderAccNumber :Int = 3214
+        var recipientName :String = name
+        var recipientAccNumber :Int = 5327
+        var amount :String = amount
         var context = LocalContext.current
 
         Column( verticalArrangement = Arrangement.Top,
@@ -117,11 +123,11 @@ fun TransferPayment(navController: NavController, modifier: Modifier = Modifier)
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun TransferConfirmationPreview() {
-    TransferPayment(rememberNavController())
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun TransferConfirmationPreview() {
+//    TransferPayment(rememberNavController())
+//}
 @Composable
 fun TransferPaymentTopBar(navController: NavController,modifier: Modifier = Modifier) {
     Column(
