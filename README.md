@@ -34,3 +34,31 @@ Speedo Transfer is a banking app that allows users to manage their finances effi
 - **Material3**: Provides UI components based on Material Design 3, offering a modern look and feel for Android apps.
 - **Navigation Compose**: A Jetpack library that enables in-app navigation using a declarative approach with Jetpack Compose.
 - **Kotlinx Serialization**: A Kotlin serialization library used for parsing and generating JSON data.
+
+  #### Screenshots from the App
+![ssss](https://github.com/user-attachments/assets/01afd173-86de-4333-a8b9-eb697e939ee1)
+
+![image](https://github.com/user-attachments/assets/7d34bb2e-9275-4266-b965-7f749bde0a72)
+
+![image](https://github.com/user-attachments/assets/8b6c4cf0-043a-4070-b24f-ccab7e6e3ed0)
+
+![image](https://github.com/user-attachments/assets/995b2227-b5d6-4601-aed7-b51c29c2583d)
+
+![image](https://github.com/user-attachments/assets/86f61a54-2582-4ae1-a44e-71347d0d7c19)
+
+![image](https://github.com/user-attachments/assets/1b376a35-a5d0-4fad-b33d-de7de4fba6e2)
+
+![image](https://github.com/user-attachments/assets/7347adbb-5f70-48d1-9519-2256c75a695f)
+
+![image](https://github.com/user-attachments/assets/b5680e78-a093-46af-974f-e2baa506bd76)
+
+![image](https://github.com/user-attachments/assets/ee6b7e4a-a228-4369-b970-8db7f7de241f)
+
+![image](https://github.com/user-attachments/assets/ec6597aa-ee4c-4804-a7fe-48b639b3102e)
+
+![image](https://github.com/user-attachments/assets/e5d6f1a0-26ab-4586-9067-f7216e2aa71c)
+
+![image](https://github.com/user-attachments/assets/6a71e6cd-5a05-498c-8dc5-337c1be15aed)
+
+
+
