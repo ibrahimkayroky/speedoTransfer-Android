@@ -5,6 +5,10 @@ Speedo Transfer is a banking app that allows users to manage their finances effi
 
 ### Features
 1. **Onboarding Screens**: Users can learn about the app through onboarding screens, shown only the first time the app is used.
+![onboarding 1](https://github.com/user-attachments/assets/97e6d344-90ba-46ce-b3c7-eb2ff393cfb1)
+![onboarding 2](https://github.com/user-attachments/assets/150c9a2e-e75c-4c25-87b5-df20fab4cec3)
+![onboarding 3](https://github.com/user-attachments/assets/a61fba1c-2a25-45a8-a223-48f6af973190)
+
 2. **Account Creation**: Users can create a profile with their name, email, password, country and date of birth. Passwords must meet security criteria: 6 characters, including one capital letter, one small letter, and a special character.
 ![image](https://github.com/user-attachments/assets/6a71e6cd-5a05-498c-8dc5-337c1be15aed)
 3. **Login**: Users can log in to their account using credentials.
@@ -18,17 +22,16 @@ Speedo Transfer is a banking app that allows users to manage their finances effi
 ![image](https://github.com/user-attachments/assets/ee6b7e4a-a228-4369-b970-8db7f7de241f)
 ![image](https://github.com/user-attachments/assets/ec6597aa-ee4c-4804-a7fe-48b639b3102e)
 7. **Transaction Confirmation**: Users receive a confirmation/notification upon successful transactions.
-8. **Error Handling**: Error messages are provided during transactions for issues like insufficient funds or invalid recipient details.
-9. **Profile Updates**: Users can update their email, country, DOB, or password.
-10. **Support Options**: Users can contact support via phone or email.
+8. **Profile Updates**: Users can update their email, country, DOB, or password.
+9. **Support Options**: Users can contact support via phone or email.
 ![image](https://github.com/user-attachments/assets/e5d6f1a0-26ab-4586-9067-f7216e2aa71c)
-11. **Inactivity Alerts**: Users are logged out after two minutes of inactivity.
+10. **Inactivity Alerts**: Users are logged out after two minutes of inactivity.
 ![image](https://github.com/user-attachments/assets/b5680e78-a093-46af-974f-e2baa506bd76)
-12. **Favorite Recipients**: Users can save, edit, and delete favorite recipients.
+11. **Favorite Recipients**: Users can save, edit, and delete favorite recipients.
 ![image](https://github.com/user-attachments/assets/7347adbb-5f70-48d1-9519-2256c75a695f)
-13. **Server/Connection Errors**: The app informs users of server errors or connection issues through specified screens.
+12. **Server/Connection Errors**: The app informs users of server errors or connection issues through specified screens.
 
-15. ### Tech Stack
+13. ### Tech Stack
 - **Jetpack Compose**: A modern toolkit for building native Android UIs with a declarative approach.
 - **Kotlin**: The primary programming language used for Android development, known for its concise syntax and modern features.
 - **Retrofit**: A type-safe HTTP client for Android that makes it easy to connect to RESTful web services.
