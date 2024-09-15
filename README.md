@@ -5,33 +5,46 @@ Speedo Transfer is a banking app that allows users to manage their finances effi
 
 ### Features
 1. **Onboarding Screens**: Users can learn about the app through onboarding screens, shown only the first time the app is used.
-![onboarding 1](https://github.com/user-attachments/assets/97e6d344-90ba-46ce-b3c7-eb2ff393cfb1)
-![onboarding 2](https://github.com/user-attachments/assets/150c9a2e-e75c-4c25-87b5-df20fab4cec3)
-![onboarding 3](https://github.com/user-attachments/assets/a61fba1c-2a25-45a8-a223-48f6af973190)
+   
+![image](https://github.com/user-attachments/assets/1b76b304-8f88-473a-a23f-9af4367b5831)
+
+![image](https://github.com/user-attachments/assets/80b0ceec-7aac-41d9-9192-1e81c25a6217)
+
+![image](https://github.com/user-attachments/assets/bebdc59f-78a1-4737-b535-69e3162438eb)
 
 2. **Account Creation**: Users can create a profile with their name, email, password, country and date of birth. Passwords must meet security criteria: 6 characters, including one capital letter, one small letter, and a special character.
+   
 ![image](https://github.com/user-attachments/assets/6a71e6cd-5a05-498c-8dc5-337c1be15aed)
-3. **Login**: Users can log in to their account using credentials.
+4. **Login**: Users can log in to their account using credentials.
+   
 ![ssss](https://github.com/user-attachments/assets/01afd173-86de-4333-a8b9-eb697e939ee1)
-4. **Account Balance**: Users can view their account balance to track available funds.
-![image](https://github.com/user-attachments/assets/7d34bb2e-9275-4266-b965-7f749bde0a72)
-5. **Transaction History**: Users can view their transaction history, including date, recipient name, and amount.
-![image](https://github.com/user-attachments/assets/995b2227-b5d6-4601-aed7-b51c29c2583d)
-6. **Send Money**: Users can transfer funds to other users by entering recipient details (name, account number) and verifying via an API call.
-![image](https://github.com/user-attachments/assets/8b6c4cf0-043a-4070-b24f-ccab7e6e3ed0)
-![image](https://github.com/user-attachments/assets/ee6b7e4a-a228-4369-b970-8db7f7de241f)
-![image](https://github.com/user-attachments/assets/ec6597aa-ee4c-4804-a7fe-48b639b3102e)
-7. **Transaction Confirmation**: Users receive a confirmation/notification upon successful transactions.
-8. **Profile Updates**: Users can update their email, country, DOB, or password.
-9. **Support Options**: Users can contact support via phone or email.
-![image](https://github.com/user-attachments/assets/e5d6f1a0-26ab-4586-9067-f7216e2aa71c)
-10. **Inactivity Alerts**: Users are logged out after two minutes of inactivity.
-![image](https://github.com/user-attachments/assets/b5680e78-a093-46af-974f-e2baa506bd76)
-11. **Favorite Recipients**: Users can save, edit, and delete favorite recipients.
-![image](https://github.com/user-attachments/assets/7347adbb-5f70-48d1-9519-2256c75a695f)
-12. **Server/Connection Errors**: The app informs users of server errors or connection issues through specified screens.
+6. **Account Balance**: Users can view their account balance to track available funds.
 
-13. ### Tech Stack
+![image](https://github.com/user-attachments/assets/7d34bb2e-9275-4266-b965-7f749bde0a72)
+7. **Transaction History**: Users can view their transaction history, including date, recipient name, and amount.
+
+![image](https://github.com/user-attachments/assets/995b2227-b5d6-4601-aed7-b51c29c2583d)
+8. **Send Money**: Users can transfer funds to other users by entering recipient details (name, account number) and verifying via an API call.
+
+![image](https://github.com/user-attachments/assets/8b6c4cf0-043a-4070-b24f-ccab7e6e3ed0)
+
+![image](https://github.com/user-attachments/assets/ee6b7e4a-a228-4369-b970-8db7f7de241f)
+
+![image](https://github.com/user-attachments/assets/ec6597aa-ee4c-4804-a7fe-48b639b3102e)
+9. **Transaction Confirmation**: Users receive a confirmation/notification upon successful transactions.
+10. **Profile Updates**: Users can update their email, country, DOB, or password.
+11. **Support Options**: Users can contact support via phone or email.
+
+![image](https://github.com/user-attachments/assets/e5d6f1a0-26ab-4586-9067-f7216e2aa71c)
+12. **Inactivity Alerts**: Users are logged out after two minutes of inactivity.
+
+![image](https://github.com/user-attachments/assets/b5680e78-a093-46af-974f-e2baa506bd76)
+13. **Favorite Recipients**: Users can save, edit, and delete favorite recipients.
+
+![image](https://github.com/user-attachments/assets/7347adbb-5f70-48d1-9519-2256c75a695f)
+14. **Server/Connection Errors**: The app informs users of server errors or connection issues through specified screens.
+
+15. ### Tech Stack
 - **Jetpack Compose**: A modern toolkit for building native Android UIs with a declarative approach.
 - **Kotlin**: The primary programming language used for Android development, known for its concise syntax and modern features.
 - **Retrofit**: A type-safe HTTP client for Android that makes it easy to connect to RESTful web services.
